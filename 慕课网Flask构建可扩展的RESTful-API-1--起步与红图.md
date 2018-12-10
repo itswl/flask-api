@@ -19,8 +19,6 @@ app/app.py
 ```
 from flask import Flask
 
-__author__ = "gaowenfeng"
-
 def create_app():
 app = Flask(__name__)
 app.config.from_object('app.config.secure')
@@ -61,8 +59,6 @@ app/api/v1/book.py
 ```
 from app.libs.redprint import RedPrint
 
-__author__ = "gaowenfeng"
-
 api = RedPrint('book')
 
 @api.route('/get')
@@ -91,7 +87,6 @@ app/api/__init__.py
 from flask import Blueprint
 from app.api.v1 import book, user
 
-__author__ = "gaowenfeng"
 
 def create_blueprint_v1():
 bp_v1 = Blueprint('v1', __name__)
@@ -106,7 +101,6 @@ app/app.py
 ```
 from flask import Flask
 
-__author__ = "gaowenfeng"
 
 def register_blueprint(app):
 from app.api.v1 import create_blueprint_v1
