@@ -1,0 +1,611 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>7. 权限控制 · flask_api</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="WeiLai">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-donate/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="慕课网Flask构建可扩展的RESTful-API-6--模型对象的序列化.html" />
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"repo":"itswl/flask_api","types":["star"],"size":"small"};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="慕课网Flask构建可扩展的RESTful-API-1--起步与红图.html">
+            
+                <a href="慕课网Flask构建可扩展的RESTful-API-1--起步与红图.html">
+            
+                    
+                    1. 起步与红图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="慕课网Flask构建可扩展的RESTful-API-2--REST基本特征.html">
+            
+                <a href="慕课网Flask构建可扩展的RESTful-API-2--REST基本特征.html">
+            
+                    
+                    2. REST基本特征
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="慕课网Flask构建可扩展的RESTful-API-3--自定义异常对象.html">
+            
+                <a href="慕课网Flask构建可扩展的RESTful-API-3--自定义异常对象.html">
+            
+                    
+                    3. 自定义异常对象
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="慕课网Flask构建可扩展的RESTful-API-4--理解WTForms并灵活改造她.html">
+            
+                <a href="慕课网Flask构建可扩展的RESTful-API-4--理解WTForms并灵活改造她.html">
+            
+                    
+                    4. 理解WTForms并灵活改造她
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="慕课网Flask构建可扩展的RESTful-API-5--Token与HTTPBasic验证-——-用令牌来管理用户.html">
+            
+                <a href="慕课网Flask构建可扩展的RESTful-API-5--Token与HTTPBasic验证-——-用令牌来管理用户.html">
+            
+                    
+                    5. Token与HTTPBasic验证-——-用令牌来管理用户
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="慕课网Flask构建可扩展的RESTful-API-6--模型对象的序列化.html">
+            
+                <a href="慕课网Flask构建可扩展的RESTful-API-6--模型对象的序列化.html">
+            
+                    
+                    6. 模型对象的序列化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.8" data-path="慕课网Flask构建可扩展的RESTful-API-7--权限控制.html">
+            
+                <a href="慕课网Flask构建可扩展的RESTful-API-7--权限控制.html">
+            
+                    
+                    7. 权限控制
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >7. 权限控制</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="71-&#x5220;&#x9664;&#x6A21;&#x578B;&#x7684;&#x6CE8;&#x610F;&#x4E8B;&#x9879;">7.1 &#x5220;&#x9664;&#x6A21;&#x578B;&#x7684;&#x6CE8;&#x610F;&#x4E8B;&#x9879;</h1>
+<p>1.204 &#x7684;HTTP&#x72B6;&#x6001;&#x7801;&#x4EE3;&#x8868;&#x7684;&#x662F;NO CONTENT&#xFF0C;&#x65E0;&#x5185;&#x5BB9;&#x3002;&#x6240;&#x4EE5;&#x5982;&#x679C;&#x72B6;&#x6001;&#x7801;&#x662F;204&#xFF0C;&#x90A3;&#x4E48;&#x65E0;&#x8BBA;&#x8FD4;&#x56DE;&#x4EC0;&#x4E48;&#xFF0C;&#x524D;&#x7AEF;&#x90FD;&#x63A5;&#x53D7;&#x4E0D;&#x5230;&#xFF0C;&#x4F46;&#x662F;&#x6211;&#x4EEC;&#x8981;&#x5C3D;&#x91CF;&#x8FD4;&#x56DE;&#x683C;&#x5F0F;&#x5316;&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x8BA9;&#x524D;&#x7AEF;&#x80FD;&#x591F;&#x5224;&#x65AD;&#xFF0C;&#x4E3A;&#x6B64;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x72B6;&#x6001;&#x7801;202&#xFF0C;&#x5E76;&#x4E14;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x7279;&#x6B8A;&#x7684;error_code=-1 &#x6765;&#x4EE3;&#x8868;&#x5220;&#x9664;&#x64CD;&#x4F5C;</p>
+<p>2.&#x7531;&#x4E8E;&#x6211;&#x4EEC;&#x7684;&#x5220;&#x9664;&#x662F;&#x903B;&#x8F91;&#x5220;&#x9664;&#xFF0C;&#x4F7F;&#x7528;get&#x7684;&#x65B9;&#x6CD5;&#x4F1A;&#x4E00;&#x76F4;&#x53EF;&#x4EE5;&#x67E5;&#x8BE2;&#x51FA;&#x5F53;&#x524D;&#x7528;&#x6237;&#xFF0C;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x5E94;&#x8BE5;&#x4F7F;&#x7528;filter_by()&#xFF0C;&#x4F20;&#x5165;status=1&#xFF0C;&#x597D;&#x5728;&#xFF0C;&#x6211;&#x4EEC;&#x4E4B;&#x524D;&#x5DF2;&#x7ECF;&#x5728;&#x57FA;&#x7C7B;&#x91CD;&#x5199;&#x4E86;filter_by()&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x8981;&#x8C03;&#x7528;filter_by()&#x4F20;&#x5165;id&#x5373;&#x53EF;</p>
+<pre><code>@api.route(&apos;/&lt;int:uid&gt;&apos;, methods=[&apos;DELETE&apos;])
+@auth.login_required
+def delete_user(uid):
+with db.auto_commit():
+user = User.query.filter_by(id=uid).first_or_404()
+user.delete()
+return DeleteSuccess()
+</code></pre><pre><code>class DeleteSuccess(Success):
+code = 202
+error_code = -1
+</code></pre><p>3.&#x9632;&#x6B62;&#x8D85;&#x6743;&#x73B0;&#x8C61; id=1&#x7684;&#x7528;&#x6237;&#xFF0C;&#x4E0D;&#x80FD;&#x5220;&#x9664;id=2&#x7684;&#x7528;&#x6237;&#xFF0C;&#x4E3A;&#x4E86;&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x6211;&#x4EEC;&#x7684;uid&#x4E0D;&#x80FD;&#x7531;&#x7528;&#x6237;&#x4F20;&#x5165;&#xFF0C;&#x800C;&#x662F;&#x5E94;&#x8BE5;&#x4ECE;&#x4ED6;&#x4F20;&#x5165;&#x7684;token&#x4E2D;&#x53D6;&#x51FA;&#x6765;&#x3002;&#x7531;&#x4E8E;&#x6211;&#x4EEC;&#x4E4B;&#x524D;&#x505A;token&#x9A8C;&#x8BC1;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5DF2;&#x7ECF;&#x628A;&#x53D6;&#x51FA;&#x6765;&#x7684;&#x4FE1;&#x606F;&#x5B58;&#x5165;&#x5230;&#x4E86;flask&#x7684;g&#x4E2D;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x8981;&#x4ECE;g&#x4E2D;&#x53D6;&#x51FA;&#x6765;&#x505A;&#x5224;&#x65AD;&#x5373;&#x53EF;</p>
+<pre><code>@api.route(&apos;&apos;, methods=[&apos;DELETE&apos;])
+@auth.login_required
+def delete_user():
+uid = g.user.uid
+with db.auto_commit():
+user = User.query.filter_by(id=uid).first_or_404()
+user.delete()
+return DeleteSuccess()
+</code></pre><blockquote>
+<p>&#x4E24;&#x4E2A;&#x77E5;&#x8BC6;&#x70B9; 1.g.user.uid&#x4E4B;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x8FD9;&#x6837;&#x7528;.&#x7684;&#x65B9;&#x5F0F;&#x83B7;&#x53D6;uid&#xFF0C;&#x662F;&#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x5728;&#x5411;g&#x4E2D;&#x5B58;&#x50A8;user&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4F7F;&#x7528;&#x7684;&#x662F;namedtuple&#xFF0C;&#x800C;&#x4E0D;&#x662F;dict&#xFF0C;&#x4E0D;&#x7136;&#x6211;&#x4EEC;&#x5C31;&#x53EA;&#x80FD;g.user[&apos;uid&apos;]&#x8FD9;&#x6837;&#x83B7;&#x53D6;&#x4E86;</p>
+</blockquote>
+<p>2.&#x5373;&#x4F7F;&#x4E24;&#x4E2A;&#x7528;&#x6237;&#x540C;&#x65F6;&#x8BBF;&#x95EE;&#x8FD9;&#x4E2A;&#x63A5;&#x53E3;&#xFF0C;&#x6211;&#x4EEC;&#x4E5F;&#x4E0D;&#x4F1A;&#x51FA;&#x9519;&#xFF0C;g&#x4F1A;&#x6B63;&#x786E;&#x7684;&#x6307;&#x5411;&#x6BCF;&#x4E00;&#x4E2A;&#x8BF7;&#x6C42;&#x7684;user&#xFF0C;&#x8FD9;&#x662F;&#x56E0;&#x4E3A;g&#x662F;&#x7EBF;&#x7A0B;&#x9694;&#x79BB;&#x7684;</p>
+<p>4.&#x6211;&#x4EEC;&#x662F;&#x9700;&#x8981;&#x4E00;&#x4E2A;&#x8D85;&#x7EA7;&#x7BA1;&#x7406;&#x5458;&#x7528;&#x6237;&#x7684;&#x8BD5;&#x56FE;&#x51FD;&#x6570;super_delete_user&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4F20;&#x5165;uid&#x6765;&#x5220;&#x9664;&#x6307;&#x5B9A;&#x7528;&#x6237;&#x7684;&#x3002;&#x4F46;&#x662F;&#x5BF9;&#x8FD9;&#x4E24;&#x4E2A;&#x63A5;&#x53E3;&#xFF0C;&#x666E;&#x901A;&#x7528;&#x6237;&#x5E94;&#x8BE5;&#x53EA;&#x80FD;&#x8BBF;&#x95EE;delete_user&#xFF0C;&#x800C;&#x8D85;&#x7EA7;&#x7BA1;&#x7406;&#x5458;&#x90FD;&#x80FD;&#x591F;&#x8BBF;&#x95EE;&#x3002;</p>
+<p>&#x9996;&#x5148;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x7BA1;&#x7406;&#x5458;&#x7528;&#x6237;&#xFF0C;&#x4E0D;&#x8FC7;&#x7BA1;&#x7406;&#x5458;&#x7528;&#x6237;&#x4E0D;&#x80FD;&#x901A;&#x8FC7;&#x516C;&#x5F00;API&#x6765;&#x521B;&#x5EFA;&#xFF0C;&#x800C;&#x5E94;&#x8BE5;&#x76F4;&#x63A5;&#x5728;&#x6570;&#x636E;&#x5E93;&#x91CC;&#x521B;&#x5EFA;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x53C8;&#x6D89;&#x53CA;&#x5230;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x5C31;&#x662F;&#x76F4;&#x63A5;&#x5728;&#x6570;&#x636E;&#x5E93;&#x91CC;&#x521B;&#x5EFA;&#xFF0C;&#x5BC6;&#x7801;&#x4E0D;&#x597D;&#x751F;&#x6210;&#x3002;&#x6240;&#x4EE5;&#x6700;&#x597D;&#x7684;&#x65B9;&#x5F0F;&#x662F;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x79BB;&#x7EBF;&#x811A;&#x672C;&#x6587;&#x4EF6;</p>
+<pre><code>from app import create_app
+from app.models.base import db
+from app.models.user import User
+
+__author__ = &quot;gaowenfeng&quot;
+
+app = create_app()
+with app.app_context():
+with db.auto_commit():
+user = User()
+user.nickname = &apos;super&apos;
+user.password = &apos;123456&apos;
+user.email = &apos;999@qq.com&apos;
+user.auth = 2
+db.session.add(user)
+</code></pre><p>&#x8FD9;&#x4E2A;&#x811A;&#x672C;&#x4E0D;&#x4EC5;&#x4EC5;&#x53EF;&#x4EE5;&#x751F;&#x6210;&#x7BA1;&#x7406;&#x5458;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x5B83;&#x751F;&#x6210;&#x5927;&#x91CF;&#x7684;&#x5047;&#x6570;&#x636E;&#xFF0C;&#x6D4B;&#x8BD5;&#x6570;&#x636E;</p>
+<h1 id="72-&#x6743;&#x9650;&#x7BA1;&#x7406;&#x65B9;&#x6848;">7.2 &#x6743;&#x9650;&#x7BA1;&#x7406;&#x65B9;&#x6848;</h1>
+<p>&#x901A;&#x8FC7;&#x4E4B;&#x524D;&#x7684;&#x5206;&#x6790;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x53D1;&#x73B0;&#xFF0C;&#x6211;&#x4EEC;&#x4E4B;&#x524D;&#x7684;get_user&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x5E94;&#x8BE5;&#x662F;super_get_user&#xFF0C;&#x800C;&#x6211;&#x4EEC;&#x5E94;&#x8BE5;&#x5728;&#x591A;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;get_user&#x4F5C;&#x4E3A;&#x666E;&#x901A;&#x7528;&#x6237;&#x7684;&#x83B7;&#x53D6;&#x65B9;&#x6CD5;</p>
+<pre><code>@api.route(&apos;/&lt;int:uid&gt;&apos;, methods=[&apos;GET&apos;])
+@auth.login_required
+def super_get_user(uid):
+user = User.query.filter_by(id=uid).first_or_404(uid)
+return jsonify(user)
+
+@api.route(&apos;&apos;, methods=[&apos;GET&apos;])
+@auth.login_required
+def get_user():
+uid = g.user.uid
+user = User.query.filter_by(id=uid).first_or_404(uid)
+return jsonify(user)
+</code></pre><h3 id="1&#x4E0D;&#x592A;&#x597D;&#x7684;&#x6743;&#x9650;&#x7BA1;&#x7406;&#x65B9;&#x6848;">1.&#x4E0D;&#x592A;&#x597D;&#x7684;&#x6743;&#x9650;&#x7BA1;&#x7406;&#x65B9;&#x6848;</h3>
+<p>&#x6211;&#x4EEC;&#x53EA;&#x8981;&#x53EF;&#x4EE5;&#x5728;&#x89C6;&#x56FE;&#x51FD;&#x6570;&#x4E2D;&#x83B7;&#x53D6;&#x5230;&#x7528;&#x6237;&#x7684;&#x6743;&#x9650;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x6743;&#x9650;&#x6765;&#x5224;&#x65AD;&#xFF0C;&#x7528;&#x6237;&#x7684;&#x8EAB;&#x4EFD;&#xFF0C;&#x6765;&#x505A;&#x51FA;&#x4E0D;&#x540C;&#x7684;&#x63A7;&#x5236;&#x3002;</p>
+<p>&#x8981;&#x505A;&#x5230;&#x8FD9;&#x4E00;&#x70B9;&#xFF0C;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x8981;&#x5728;&#x751F;&#x6210;&#x4EE4;&#x724C;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5C06;is_admin&#x7684;&#x5B57;&#x6BB5;&#x5199;&#x5165;&#x5230;token&#x4E2D;&#x3002;&#x7136;&#x540E;&#x518D;&#x89C6;&#x56FE;&#x51FD;&#x6570;&#x4E2D;&#x53D6;&#x51FA;&#x8FD9;&#x4E2A;&#x5B57;&#x6BB5;&#x6765;&#x8FDB;&#x884C;&#x4E0D;&#x540C;&#x7684;&#x5224;&#x65AD;&#x5C31;&#x597D;&#x4E86;&#x3002;</p>
+<p>&#x8FD9;&#x6837;&#x7684;&#x65B9;&#x6848;&#x6709;&#x4E24;&#x4E2A;&#x7F3A;&#x70B9;&#xFF1A; 1.&#x4EE3;&#x7801;&#x592A;&#x5570;&#x55E6;&#x4E86;&#xFF0C;&#x6BCF;&#x4E2A;&#x89C6;&#x56FE;&#x51FD;&#x6570;&#x90FD;&#x9700;&#x8981;&#x505A;&#x8FD9;&#x6837;&#x7684;&#x5224;&#x65AD;&#x3002; 2.&#x6211;&#x4EEC;&#x628A;&#x5168;&#x65B0;&#x60F3;&#x7684;&#x592A;&#x7B80;&#x5355;&#x4E86;&#xFF0C;&#x6211;&#x4EEC;&#x8FD9;&#x4E2A;&#x9879;&#x76EE;&#x53EA;&#x6709;&#x7BA1;&#x7406;&#x5458;&#x548C;&#x666E;&#x901A;&#x7528;&#x6237;&#x4E24;&#x79CD;&#xFF0C;&#x4F46;&#x662F;&#x771F;&#x6B63;&#x7684;&#x6743;&#x9650;&#x5E94;&#x8BE5;&#x6709;&#x5404;&#x79CD;&#x5206;&#x7EC4;&#xFF0C;&#x6BCF;&#x4E2A;&#x5206;&#x7EC4;&#x6BCF;&#x4E2A;&#x7528;&#x6237;&#x90FD;&#x6709;&#x4E0D;&#x540C;&#x7684;&#x6743;&#x9650;&#xFF0C;&#x5982;&#x679C;&#x8FD9;&#x6837;&#xFF0C;&#x518D;&#x5728;&#x89C6;&#x56FE;&#x51FD;&#x6570;&#x91CC;&#x8FDB;&#x884C;&#x63A7;&#x5236;&#x57FA;&#x672C;&#x4E0A;&#x662F;&#x4E0D;&#x53EF;&#x80FD;</p>
+<h3 id="2&#x6BD4;&#x8F83;&#x597D;&#x7684;&#x6743;&#x9650;&#x7BA1;&#x7406;&#x65B9;&#x6848;">2.&#x6BD4;&#x8F83;&#x597D;&#x7684;&#x6743;&#x9650;&#x7BA1;&#x7406;&#x65B9;&#x6848;</h3>
+<p>&#x5047;&#x5982;&#x8BF4;&#x6211;&#x4EEC;&#x5728;&#x4EE3;&#x7801;&#x91CC;&#x505A;&#x4E09;&#x5F20;&#x8868;&#xFF08;Mysql&#xFF0C;Redis&#xFF0C;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF09;&#xFF0C;&#x6BCF;&#x4E00;&#x5F20;&#x8868;&#x90FD;&#x8BB0;&#x5F55;&#x7740;&#x67D0;&#x4E00;&#x79CD;&#x6743;&#x9650;&#xFF0C;&#x73B0;&#x5728;&#x5047;&#x5982;&#x67D0;&#x4E00;&#x4E2A;&#x8BF7;&#x6C42;&#x8FC7;&#x6765;&#x4E86;&#x3002;&#x5F53;&#x7528;&#x6237;&#x8BBF;&#x95EE;@auto.login&#x7684;&#x63A5;&#x53E3;&#x7684;&#x8BDD;&#xFF0C;&#x4ED6;&#x5FC5;&#x987B;&#x8981;&#x5E26;&#x6709;&#x4E00;&#x4E2A;token&#x4EE4;&#x724C;&#x4E2D;&#x7684;&#xFF0C;&#x800C;&#x6211;&#x4EEC;&#x662F;&#x53EF;&#x4EE5;&#x4ECE;token&#x4E2D;&#x8BFB;&#x53D6;&#x5230;&#x5F53;&#x524D;&#x7684;&#x6743;&#x9650;&#x79CD;&#x7C7B;&#x7684;&#xFF0C;&#x5E76;&#x4E14;&#x6211;&#x4EEC;&#x662F;&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#x4ED6;&#x6240;&#x8BBF;&#x95EE;&#x7684;&#x63A5;&#x53E3;&#x7684;&#x3002;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x62FF;&#x6743;&#x9650;&#x79CD;&#x7C7B;&#x548C;&#x63A5;&#x53E3;&#x505A;&#x5339;&#x914D;&#xFF0C;&#x7136;&#x540E;&#x6765;&#x505A;&#x5224;&#x65AD;&#x3002; &#x8FD9;&#x6837;&#x505A;&#x8FD8;&#x6709;&#x4E00;&#x4E2A;&#x5F88;&#x597D;&#x7684;&#x4F18;&#x52BF;&#xFF0C;&#x662F;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728;&#x8FDB;&#x5165;&#x65B9;&#x6CD5;&#x524D;&#x8FDB;&#x884C;&#x6743;&#x9650;&#x5224;&#x65AD;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x80FD;&#x591F;&#x8BBF;&#x95EE;&#x6839;&#x672C;&#x5C31;&#x4E0D;&#x4F1A;&#x8FDB;&#x5165;&#x8BE5;&#x65B9;&#x6CD5;&#x3002;</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/14597179-c5171f4d51fe6475?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"> </p>
+<h1 id="73-scope&#x6743;&#x9650;&#x7BA1;&#x7406;&#x7684;&#x5B9E;&#x73B0;">7.3 Scope&#x6743;&#x9650;&#x7BA1;&#x7406;&#x7684;&#x5B9E;&#x73B0;</h1>
+<h3 id="1&#x7F16;&#x7801;&#x5B9E;&#x73B0;">1.&#x7F16;&#x7801;&#x5B9E;&#x73B0;</h3>
+<p>&#x6839;&#x636E;&#x4E0A;&#x4E00;&#x5C0F;&#x8282;&#x7684;&#x7F16;&#x5199;&#xFF0C;&#x6211;&#x4EEC;&#x6765;&#x52A8;&#x624B;&#x7F16;&#x5199;&#x6743;&#x9650;&#x7BA1;&#x7406;&#x65B9;&#x6848;</p>
+<h4 id="11-scope&#x914D;&#x7F6E;">1.1 scope&#x914D;&#x7F6E;</h4>
+<p>libs/scope.py</p>
+<pre><code>class AdminScope:
+allow_api = [&apos;v1.super_get_user&apos;]
+
+class UserScope:
+allow_api = [&apos;v1.get_user&apos;]
+
+# &#x5224;&#x65AD;&#x5F53;&#x524D;&#x8BBF;&#x95EE;&#x7684;endpoint&#x662F;&#x5426;&#x5728;scope&#x4E2D;
+def is_in_scope(scope, endpoint):
+# &#x53CD;&#x5C04;&#x83B7;&#x53D6;&#x7C7B;
+scope = globals()[scope]()
+return endpoint in scope.allow_api
+</code></pre><h4 id="12-&#x751F;&#x6210;&#x4EE4;&#x724C;">1.2 &#x751F;&#x6210;&#x4EE4;&#x724C;</h4>
+<p>models/user.py</p>
+<pre><code>@staticmethod
+def verify(email, password):
+user = User.query.filter_by(email=email).first_or_404()
+if not user.check_password(password):
+raise AuthFailed()
+# &#x6839;&#x636E;&#x6743;&#x9650;&#x7801;&#x8F6C;&#x6362;&#x6210;&#x5BF9;&#x5E94;&#x7684;Scope
+scope = &apos;AdminScope&apos; if user.auth == 2 else &apos;UserScope&apos;
+return {&apos;uid&apos;: user.id, &apos;scope&apos;: scope}
+</code></pre><p>api/v1/token.py</p>
+<pre><code>def generator_auth_token(uid, ac_type, scope=None,
+expiration=7200):
+&quot;&quot;&quot;&#x751F;&#x6210;&#x4EE4;&#x724C;&quot;&quot;&quot;
+s = Serializer(current_app.config[&apos;SECRET_KEY&apos;],
+expires_in=expiration)
+return s.dumps({
+&apos;uid&apos;: uid,
+&apos;type&apos;: ac_type.value,
+# &#x5C06;scope&#x5199;&#x5165;token
+&apos;scope&apos;: scope
+})
+</code></pre><h4 id="13-&#x9A8C;&#x8BC1;&#x4EE4;&#x724C;">1.3 &#x9A8C;&#x8BC1;&#x4EE4;&#x724C;</h4>
+<pre><code>def verify_auth_token(token):
+s = Serializer(current_app.config[&apos;SECRET_KEY&apos;])
+try:
+data = s.loads(token)
+except BadSignature:
+raise AuthFailed(msg=&apos;token is valid&apos;, error_code=1002)
+except SignatureExpired:
+raise AuthFailed(msg=&apos;token is expired&apos;, error_code=1003)
+uid = data[&apos;uid&apos;]
+ac_type = data[&apos;type&apos;]
+scope = data[&apos;scope&apos;]
+
+# &#x5224;&#x65AD;&#x662F;&#x5426;&#x6709;&#x6743;&#x9650;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#xFF0C;&#x629B;&#x51FA;&#x5F02;&#x5E38;
+allow = is_in_scope(scope, request.endpoint)
+if not allow:
+raise Forbidden()
+return User(uid, ac_type, scope)
+</code></pre><h1 id="74-scope&#x4F18;&#x5316;">7.4 Scope&#x4F18;&#x5316;</h1>
+<h4 id="1&#x652F;&#x6301;&#x6743;&#x9650;&#x76F8;&#x52A0;">1.&#x652F;&#x6301;&#x6743;&#x9650;&#x76F8;&#x52A0;</h4>
+<p>&#x5047;&#x5982;&#x6211;&#x4EEC;&#x7684;UserScope&#x7684;&#x6743;&#x9650;&#x662F;A&#xFF0C;B&#xFF0C;C&#x3002;&#x800C;AdminScope&#x7684;&#x6743;&#x9650;&#x662F;A&#xFF0C;B&#xFF0C;C&#xFF0C;D&#x3002;&#x6309;&#x7167;&#x6211;&#x4EEC;&#x7684;&#x5199;&#x6CD5;&#xFF0C;&#x6211;&#x4EEC;&#x7684;A&#xFF0C;B&#xFF0C;C&#x5C31;&#x9700;&#x8981;&#x4E9B;&#x4E24;&#x904D;&#x3002;&#x51B5;&#x4E14;&#x8FD9;&#x53EA;&#x662F;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x4F8B;&#x5B50;&#xFF0C;&#x5B9E;&#x9645;&#x60C5;&#x51B5;&#x4E0B;&#x4F1A;&#x66F4;&#x590D;&#x6742;&#x3002;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5B9E;&#x73B0;&#x4E00;&#x79CD;&#x65B9;&#x6CD5;&#xFF0C;&#x53EF;&#x4EE5;&#x8BA9;AdminScope&#x7684;allow_api&#x53EF;&#x4EE5;&#x548C;UserScope&#x7684;allow_api&#x76F8;&#x52A0;&#x5F97;&#x5230;&#x65B0;&#x7684;allow_api&#x3002;</p>
+<pre><code>class AdminScope:
+allow_api = [&apos;v1.super_get_user&apos;]
+
+def __init__(self):
+self.add(UserScope())
+
+# &#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x5C06;&#x5176;&#x4ED6;&#x7684;Scope&#x5408;&#x5E76;&#x5230;&#x5F53;&#x524D;Scope&#x3002;&#x7701;&#x53BB;&#x91CD;&#x590D;&#x4EE3;&#x7801;&#x7684;&#x7F16;&#x5199;
+def add(self, other):
+self.allow_api = self.allow_api + other.allow_api
+</code></pre><h4 id="2&#x652F;&#x6301;&#x6743;&#x9650;&#x94FE;&#x5F0F;&#x76F8;&#x52A0;">2.&#x652F;&#x6301;&#x6743;&#x9650;&#x94FE;&#x5F0F;&#x76F8;&#x52A0;</h4>
+<p>&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x53EA;&#x80FD;&#x8BB2;AdminScope&#x548C;UserScope&#x7684;&#x6743;&#x9650;&#x76F8;&#x52A0;&#xFF0C;&#x5982;&#x679C;&#x8FD8;&#x60F3;&#x518D;&#x52A0;&#x4E0A;&#x5176;&#x4ED6;&#x7684;Scope&#xFF0C;&#x5C31;&#x9700;&#x8981;&#x94FE;&#x5F0F;&#x7684;&#x64CD;&#x4F5C;</p>
+<pre><code>class SuperScope:
+allow_api = [&apos;v1.super_get_user&apos;]
+
+def __init__(self):
+self.add(UserScope()).add(AdminScope())
+
+# &#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x5C06;&#x5176;&#x4ED6;&#x7684;Scope&#x5408;&#x5E76;&#x5230;&#x5F53;&#x524D;Scope&#x3002;&#x7701;&#x53BB;&#x91CD;&#x590D;&#x4EE3;&#x7801;&#x7684;&#x7F16;&#x5199;
+def add(self, other):
+self.allow_api = self.allow_api + other.allow_api
+return self
+</code></pre><h4 id="3&#x6240;&#x6709;&#x5B50;&#x7C7B;&#x652F;&#x6301;&#x76F8;&#x52A0;">3.&#x6240;&#x6709;&#x5B50;&#x7C7B;&#x652F;&#x6301;&#x76F8;&#x52A0;</h4>
+<p>add&#x65B9;&#x6CD5;&#x4E0D;&#x5E94;&#x8BE5;&#x5199;&#x5728;&#x5177;&#x4F53;&#x7684;Scope&#x7C7B;&#x4E2D;&#xFF0C;&#x56E0;&#x4E3A;&#x8FD9;&#x6837;&#x5C31;&#x53EA;&#x6709;&#x5F53;&#x524D;Scope&#x7C7B;&#x6709;&#x8BE5;&#x529F;&#x80FD;&#x4E86;&#x3002;&#x5E94;&#x8BE5;&#x5C06;add&#x65B9;&#x6CD5;&#x5199;&#x5728;&#x57FA;&#x7C7B;Scope&#x4E2D;</p>
+<pre><code>class Scope:
+allow_api = []
+
+def add(self, other):
+self.allow_api = self.allow_api + other.allow_api
+return self
+
+class SuperScope(Scope):
+allow_api = [&apos;v1.super_get_user&apos;]
+
+def __init__(self):
+self.add(UserScope())
+
+class UserScope(Scope):
+allow_api = [&apos;v1.get_user&apos;]
+</code></pre><h4 id="4&#x8FD0;&#x7B97;&#x7B26;&#x91CD;&#x8F7D;">4.&#x8FD0;&#x7B97;&#x7B26;&#x91CD;&#x8F7D;</h4>
+<p>&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x4E00;&#x76F4;&#x4F7F;&#x7528;add()&#x65B9;&#x6CD5;&#xFF0C;&#x592A;&#x5570;&#x55E6;&#x4E86;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4FEE;&#x6539;&#x6211;&#x4EEC;&#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x4F7F;&#x5F97;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;+&#x53F7;&#x6765;&#x5B8C;&#x6210;add()&#x65B9;&#x6CD5;&#x7684;&#x529F;&#x80FD;&#x3002; &#x8981;&#x5B8C;&#x6210;&#x8FD9;&#x4E2A;&#x529F;&#x80FD;&#xFF0C;&#x5C31;&#x8981;&#x4F7F;&#x7528;&#x5230;&#x8FD0;&#x7B97;&#x7B26;&#x91CD;&#x8F7D;&#x7684;&#x6280;&#x672F;</p>
+<pre><code>class Scope:
+allow_api = []
+
+def __add__(self, other):
+self.allow_api = self.allow_api + other.allow_api
+return self
+
+class SuperScope(Scope):
+allow_api = [&apos;v1.D&apos;]
+
+def __init__(self):
+self +AdminScope()+UserScope()
+class AdminScope(Scope):
+allow_api = [&apos;v1.B&apos;, &apos;v1.C&apos;]
+
+def __init__(self):
+self + (UserScope())
+
+class UserScope(Scope):
+allow_api = [&apos;v1.A&apos;]
+</code></pre><h4 id="5&#x53BB;&#x91CD;">5.&#x53BB;&#x91CD;</h4>
+<p>&#x6211;&#x4EEC;&#x73B0;&#x5728;&#x7684;scope&#xFF0C;&#x7F16;&#x5199;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#xFF0C;&#x7531;&#x4E8E;&#x53EF;&#x80FD;&#x4F1A;&#x8FDE;&#x7EED;&#x76F8;&#x52A0;&#xFF0C;&#x4F1A;&#x6709;&#x5F88;&#x591A;&#x91CD;&#x590D;&#x7684;&#x8BD5;&#x56FE;&#x51FD;&#x6570;&#xFF0C;&#x5982;SuperScope()&#x4E2D;&#x4F1A;&#x51FA;&#x73B0;&#x4E24;&#x6B21;v1.A,&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x5C31;&#x9700;&#x8981;&#x5C06;&#x8FD9;&#x4E9B;&#x91CD;&#x590D;&#x7684;&#x8BD5;&#x56FE;&#x51FD;&#x6570;&#x53BB;&#x9664;&#x6389;&#x3002;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x8981;&#x4F7F;&#x7528;set&#x8FD9;&#x4E2A;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x5B8C;&#x6210;&#x3002;</p>
+<pre><code>class Scope:
+allow_api = []
+
+def __add__(self, other):
+self.allow_api = self.allow_api | other.allow_api
+return self
+
+class SuperScope(Scope):
+allow_api = {&apos;v1.super_get_user&apos;}
+
+def __init__(self):
+self + (UserScope())
+
+class UserScope(Scope):
+allow_api = {&apos;v1.get_user&apos;}
+
+def is_in_scope(scope, endpoint):
+scope = globals()[scope]()
+return endpoint in scope.allow_api
+</code></pre><h4 id="6&#x6A21;&#x5757;&#x7EA7;&#x522B;&#x7684;scope">6.&#x6A21;&#x5757;&#x7EA7;&#x522B;&#x7684;Scope</h4>
+<p>&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x7684;Scope&#x90FD;&#x662F;&#x8BD5;&#x56FE;&#x51FD;&#x6570;&#x7EA7;&#x522B;&#x7684;&#xFF0C;&#x52A0;&#x5165;&#x6211;&#x4EEC;&#x7684;user&#x4E0B;&#x9762;&#x6709;100&#x4E2A;&#x8BD5;&#x56FE;&#x51FD;&#x6570;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x9700;&#x8981;&#x628A;&#x8FD9;100&#x4E2A;&#x5168;&#x90FD;&#x52A0;&#x5165;&#x8FDB;&#x6765;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x60F3;&#x529E;&#x6CD5;&#xFF0C;&#x8BA9;&#x6211;&#x4EEC;&#x7684;Scope&#x652F;&#x6301;&#x53EF;&#x4EE5;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x6A21;&#x5757;&#x4E0B;&#x7684;&#x8BD5;&#x56FE;&#x51FD;&#x6570;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#xFF0C;allow_moudle&#xFF0C;&#x6765;&#x6807;&#x793A;&#x5141;&#x8BB8;&#x901A;&#x8FC7;&#x7684;&#x6A21;&#x5757;&#x3002;&#x7136;&#x540E;&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x7684;is_in_scope&#x53EA;&#x662F;&#x7B80;&#x5355;&#x7684;&#x5224;&#x65AD;endpoint&#x662F;&#x5426;&#x5728;scope.allow_api&#x4E2D;&#xFF0C;endpoint&#x9ED8;&#x8BA4;&#x7684;&#x5F62;&#x5F0F;&#x662F;blueprint.view_func &#x7684;&#x5F62;&#x5F0F;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x81EA;&#x5B9A;&#x4E49;endpoint&#x4E3A;blueprint.moudle_name+view_func&#x8FD9;&#x6837;&#x7684;&#x5F62;&#x5F0F;&#xFF0C;&#x8FD9;&#x6837;&#x6211;&#x4EEC;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x5728;is_in_scope&#x8FDB;&#x884C;&#x6A21;&#x5757;&#x7684;&#x5224;&#x65AD;</p>
+<p>&#x4FEE;&#x6539;&#x7EA2;&#x56FE;&#x7684;&#x6CE8;&#x518C;&#xFF1A;</p>
+<pre><code>def register(self, bp, url_prefix=None):
+if url_prefix is None:
+url_prefix = &apos;/&apos;+self.name
+for f, rule, options in self.mound:
+# &#x4FEE;&#x6539;endpoint&#x7684;&#x5B9A;&#x4E49;
+endpoint = self.name + &apos;+&apos; + options.pop(&quot;endpoint&quot;, f.__name__)
+bp.add_url_rule(url_prefix + rule, endpoint, f, **options)
+</code></pre><p>scope.py</p>
+<pre><code>class Scope:
+allow_api = set()
+allow_module = set()
+
+def __add__(self, other):
+self.allow_api = self.allow_api | other.allow_api
+return self
+
+class SuperScope(Scope):
+allow_module = {&apos;v1.user&apos;}
+
+class UserScope(Scope):
+allow_api = {&apos;v1.user+get_user&apos;}
+
+def is_in_scope(scope, endpoint):
+scope = globals()[scope]()
+splits = endpoint.split(&apos;+&apos;)
+red_name = splits[0]
+return (endpoint in scope.allow_api) or \
+(red_name in scope.allow_module)
+</code></pre><h4 id="7&#x652F;&#x6301;&#x6392;&#x9664;">7.&#x652F;&#x6301;&#x6392;&#x9664;</h4>
+<p>&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x6A21;&#x5757;&#x53C8;100&#x4E2A;&#x89C6;&#x56FE;&#x51FD;&#x6570;&#xFF0C;UserScope&#x9700;&#x8981;&#x8BBF;&#x95EE;98&#x4E2A;&#xFF0C;AdminScope&#x9700;&#x8981;&#x8BBF;&#x95EE;&#x6240;&#x6709;&#xFF0C;&#x90A3;&#x4E48;UserScope&#x7684;&#x7F16;&#x5199;&#x5C31;&#x592A;&#x9EBB;&#x70E6;&#x4E86;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x8BA9;&#x6211;&#x4EEC;&#x7684;Scope &#x652F;&#x6301;&#x6392;&#x9664;&#x64CD;&#x4F5C;&#xFF0C;&#x8FD9;&#x6837;UserScope&#x5C31;&#x53EF;&#x4EE5;&#x6DFB;&#x52A0;AdminScope&#x7684;&#x5168;&#x90E8;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x6392;&#x9664;&#x6389;&#x4ED6;&#x4E0D;&#x80FD;&#x8BBF;&#x95EE;&#x7684;&#x4E24;&#x4E2A;&#x5C31;&#x597D;&#x4E86;</p>
+<pre><code>class Scope:
+allow_api = set()
+allow_module = set()
+# &#x652F;&#x6301;&#x6392;&#x9664;
+forbidden = set()
+
+def __add__(self, other):
+self.allow_module = self.allow_module | other.allow_module
+self.allow_api = self.allow_api | other.allow_api
+self.forbidden = self.forbidden | other.forbidden
+return self
+
+class SuperScope(Scope):
+allow_module = {&apos;v1.user&apos;}
+
+class UserScope(Scope):
+forbidden = {&apos;v1.user+super_get_user&apos;, &apos;v1.user+super_delete_user&apos;}
+
+def __init__(self):
+self + SuperScope()
+
+def is_in_scope(scope, endpoint):
+scope = globals()[scope]()
+splits = endpoint.split(&apos;+&apos;)
+red_name = splits[0]
+# &#x9996;&#x5148;&#x5224;&#x65AD;&#x662F;&#x5426;&#x5728;&#x8981;&#x6392;&#x9664;&#x7684;&#x5217;&#x8868;&#x91CC;
+if endpoint in scope.forbidden:
+return False
+return (endpoint in scope.allow_api) or \
+(red_name in scope.allow_module)
+</code></pre>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="慕课网Flask构建可扩展的RESTful-API-6--模型对象的序列化.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 6. 模型对象的序列化">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"7. 权限控制","level":"1.8","depth":1,"previous":{"title":"6. 模型对象的序列化","level":"1.7","depth":1,"path":"慕课网Flask构建可扩展的RESTful-API-6--模型对象的序列化.md","ref":"慕课网Flask构建可扩展的RESTful-API-6--模型对象的序列化.md","articles":[]},"dir":"ltr"},"config":{"plugins":["donate","github-buttons@2.1.0","edit-link"],"root":".","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"donate":{"alipay":"https://upload-images.jianshu.io/upload_images/14597179-244cd80fc2dec0f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240","alipayText":"支付宝打赏","button":"打赏","title":"","wechat":"https://upload-images.jianshu.io/upload_images/14597179-5eaac14c06e7dc3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240","wechatText":"微信打赏"},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"github-buttons":{"repo":"itswl/flask_api","types":["star"],"size":"small"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"edit-link":{"label":"Edit This Page","base":"https://github.com/itswl/flask_api/edit/master"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"WeiLai","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"flask_api","language":"zh-hans","gitbook":"*","description":"flask_api"},"file":{"path":"慕课网Flask构建可扩展的RESTful-API-7--权限控制.md","mtime":"2018-12-10T01:36:59.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-12-10T02:03:30.185Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-donate/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-edit-link/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
