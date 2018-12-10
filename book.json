@@ -1,0 +1,36 @@
+
+{
+    "title": "flask_api",
+    "description": "flask_api",
+    "author": "WeiLai",
+    "language": "zh-hans",
+    "root": ".",
+
+    "plugins": [
+        "donate",
+        "github-buttons@2.1.0",
+        "edit-link"
+    ],
+
+    "pluginsConfig": {
+        "donate": {
+            "wechat": "https://upload-images.jianshu.io/upload_images/14597179-5eaac14c06e7dc3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240",
+            "alipay": "https://upload-images.jianshu.io/upload_images/14597179-244cd80fc2dec0f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240",
+            "title": "",
+            "button": "打赏",
+            "alipayText": "支付宝打赏",
+            "wechatText": "微信打赏"
+        },
+        "github-buttons": {
+            "repo": "itswl/flask_api",
+            "types": [
+                "star"
+            ],
+            "size": "small"
+        },
+        "edit-link": {
+            "base": "https://github.com/itswl/flask_api/edit/master",
+            "label": "Edit This Page"
+        }
+    }
+}
