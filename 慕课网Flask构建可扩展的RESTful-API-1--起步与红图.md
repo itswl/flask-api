@@ -31,12 +31,11 @@ ginger.py
 ```
 from app.app import create_app
 
-__author__ = "gaowenfeng"
 
 app = create_app()
 
 if __name__ == '__main__':
-app.run(debug=True)
+    app.run(debug=True)
 ```
 
 # 1.2 红图
@@ -63,22 +62,23 @@ api = RedPrint('book')
 
 @api.route('/get')
 def get_book():
-return 'get book'
+    return 'get book'
+    
 @api.route('/create')
 def create():
-return 'create book'
+    return 'create book'
 ```
 app/api/v1/user.py
 ```
 from app.libs.redprint import RedPrint
 
-__author__ = "gaowenfeng"
+
 
 api = RedPrint('user')
 
 @api.route('/get')
 def get_user():
-return 'i am gwf'
+    return 'i am gwf'
 ```
 #### 2.2 红图向蓝图的注册
 
@@ -89,11 +89,11 @@ from app.api.v1 import book, user
 
 
 def create_blueprint_v1():
-bp_v1 = Blueprint('v1', __name__)
+    bp_v1 = Blueprint('v1', __name__)
 # 假设api有register的方法，后面再实现, url_prefix解决前缀问题
-book.api.register(bp_v1, url_prefix='/book')
-user.api.register(bp_v1, url_prefix='/user')
-return bp_v1
+    book.api.register(bp_v1, url_prefix='/book')
+    user.api.register(bp_v1, url_prefix='/user')
+    return bp_v1
 ```
 #### 2.3 蓝图向Flask核心对象的注册
 
@@ -103,14 +103,14 @@ from flask import Flask
 
 
 def register_blueprint(app):
-from app.api.v1 import create_blueprint_v1
+    from app.api.v1 import create_blueprint_v1
 # url_prefix定义url前缀
-app.register_blueprint(create_blueprint_v1(), url_prefix='/v1')
+    app.register_blueprint(create_blueprint_v1(), url_prefix='/v1')
 
 def create_app():
-app = Flask(__name__)
-app.config.from_object('app.config.secure')
-app.config.from_object('app.config.setting')
+    app = Flask(__name__)
+    app.config.from_object('app.config.secure')
+    app.config.from_object('app.config.setting')
 
 register_blueprint(app)
 return app<
