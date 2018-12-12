@@ -11,13 +11,17 @@
 
 对于视图函数的URL，尽量不应该包含动词，因为URL是用来定位资源的，例如我们之前的试图函数，应该这样改写
 ```
-@api.route('', methods=['GET'])
-def get_book():
-return 'get book'
+from app.libs.redprint import Redprint
 
-@api.route('', methods=['POST'])
-def create():
-return 'create book'</pre>
+api = Redprint('user')
+
+@api.route('',methods = ['GET'])
+def get_user():
+    return 'get_user'
+
+@api.route('',methods = ['POST'])
+def create_user():
+    return 'create_user'
 ```
 ### 2.为什么标准的REST不适合内部开发
 
