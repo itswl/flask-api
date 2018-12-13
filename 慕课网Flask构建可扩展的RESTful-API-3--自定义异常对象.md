@@ -355,7 +355,7 @@ create_client和__register_user_by_email是一个总-分的关系，客户端注
 这是因为，form.validate()如果校验不通过，他不会抛出异常，而是会将异常信息存储在form对象中。
  所以这个时候我们应该判断如果校验不通过，就抛出一个自定义的异常。
  
- # 比如我之前在"type" = "100",错误，但还是会return sucess。
+ **比如我之前在"type" = "100",错误，但还是会return sucess。**
 
 werkzeug为我们提供的大量的异常，都继承自HTTPException，但是这些异常都很具体，不能为我们所用。不过我们可以自己定义一个异常来继承HTTPException
 
