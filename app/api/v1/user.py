@@ -25,4 +25,12 @@ def delete_user():
 
 @api.route('',methods = ['POST'])
 def create_user():
-    return 'create_user'
+    '''
+    name,password 数据，第三方，自己的产品，APP，小程序，用户
+    人，
+    客户端 client
+    种类很多
+    注册形式很多  短信 邮件 QQ 微信
+
+    '''
+    pass
