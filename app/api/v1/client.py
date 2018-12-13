@@ -8,8 +8,8 @@ from app.models.user import User
 
 api = Redprint('client')  # 实例化一个Redprint
 
-@api.route('/register', methods = ['PSOT'] )  # 路由注册
-def create_client():
+@api.route('/register', methods = ['POST'] )  # 路由注册  # 因为这里把POST打成PSOT，导致不能使用POST访问，状态码405
+def create_client():                         
     # 表单 - 一般网页  json - 一般移动端
     # 注册 登录
     # 参数 校验  接收参数
