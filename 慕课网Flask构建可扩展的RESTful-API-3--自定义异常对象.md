@@ -309,8 +309,8 @@ from app.models.user import User
 
 api = Redprint('client')  # 实例化一个Redprint
 
-@api.route('/register', methods = ['PSOT'] )  # 路由注册
-def create_client():
+@api.route('/register', methods = ['POST'] )  # 路由注册  # 因为这里把POST打成PSOT，导致不能使用POST访问，状态码405
+def create_client():                         
     # 表单 - 一般网页  json - 一般移动端
     # 注册 登录
     # 参数 校验  接收参数
@@ -329,9 +329,9 @@ def create_client():
         }
         promise[form.type.data]()
     return 'sucess'  #  暂时返回sucess
-# 总 ↑
+#总 ↑
 
-# 分 ↓
+#分 ↓
 
 def __register_user_by_email():
     form = UserEmailForm(data=request.json)
@@ -343,6 +343,7 @@ def __register_user_by_email():
 
 # def __register_user_by_MINA():
 #     pass
+
 ```
 create_client和__register_user_by_email是一个总-分的关系，客户端注册的种类是比较多的，但是这些众多的种类又有一些共通的东西，比如处理客户端的type的值，就是所有的客户端都要携带的参数。对于这些共有的参数，我们就统一在create_client,ClientForm中进行处理
  对于不同的客户端的特色的属性和功能，我们放在“分”里面来，比如email的nikename
@@ -353,6 +354,8 @@ create_client和__register_user_by_email是一个总-分的关系，客户端注
 1.传入错误的参数，虽然没有添加到数据库，但是返回 结果显示正常
 这是因为，form.validate()如果校验不通过，他不会抛出异常，而是会将异常信息存储在form对象中。
  所以这个时候我们应该判断如果校验不通过，就抛出一个自定义的异常。
+ 
+ # 比如我之前在"type" = "100",错误，但还是会return sucess。
 
 werkzeug为我们提供的大量的异常，都继承自HTTPException，但是这些异常都很具体，不能为我们所用。不过我们可以自己定义一个异常来继承HTTPException
 
@@ -367,29 +370,70 @@ rest中状态码代表的意义
 201 更新/创建成功
 204 删除成功
 301/302 重定向
-```
-class ClientTypeError(HTTPException):
-code = 400
 
-description = (
-'client is invalid'
-)
+app\libs\erro_code.py
+```
+from werkzeug.exceptions import HTTPException
+# 自定义异常类
+
+class ClientTypeErro(HTTPException):
+    code = 400
+    description = (
+        'client is invalid'
+    )
 ```
 修改后的试图函数
+app\api\v1\client.py
 ```
-@api.route('/register', methods=['POST'])
-def create_client():
-data = request.json
-form = ClientForm(data=data)
 
-if form.validate():
-promise = {
-ClientTypeEnum.USER_EMAIL: __register_user_by_email
-}
-promise[form.type.data]()
-else:
-raise ClientTypeError()
-return 'success'
+from app.libs.redprint import Redprint
+
+from app.validators.forms import ClientForm,UserEmailForm
+from flask import request
+from app.libs.enums import ClientTypeEnum
+from app.models.user import User
+
+# from werkzeug.exceptions import HTTPException   #  异常
+from app.libs.erro_code import ClientTypeErro   # 导入自定义异常
+
+api = Redprint('client')  # 实例化一个Redprint
+
+@api.route('/register', methods = ['POST'] )  # 路由注册  # 因为这里把POST打成PSOT，导致不能使用POST访问，状态码405
+def create_client():                         
+    # 表单 - 一般网页  json - 一般移动端
+    # 注册 登录
+    # 参数 校验  接收参数
+    # WTForms 验证表单
+
+#用来接收json类型的参数
+    data = request.json
+# 关键字参数data是wtform中用来接收json参数的方法
+    form = ClientForm(data = data)  # data =   来接收json
+
+    if form.validate():
+# 替代switchcase-{Enum_name:handle_func}
+        promise = {
+            ClientTypeEnum.USER_EMAIL: __register_user_by_email#,
+            # ClientTypeEnum.USER_MINA: __register_user_by_MINA   # 可在此处构建多种枚举类型
+        }
+        promise[form.type.data]()
+    else:
+        raise ClientTypeErro()  # 抛出自定义异常
+    return 'sucess'  #  暂时返回sucess
+#总 ↑
+
+#分 ↓
+
+def __register_user_by_email():
+    form = UserEmailForm(data=request.json)
+    if form.validate():
+        User.register_by_email(form.nickname.data,
+                               form.account.data,
+                               form.secret.data)
+
+
+# def __register_user_by_MINA():
+#     pass
 ```
 修改完成之后，已经修复了之前的缺陷，但是这样爆出了两个问题：
  1.代码太啰嗦了，每个试图函数里，都需要这么写
@@ -406,75 +450,87 @@ return 'success'
 无论上面三种，都属于输出，REST-API要求输入输出都要返回JSON
 
 3.自定义ApiException
-通过分析HttpException的get_body,get_header源码我们可以知道，这两个方法分别组成了默认异常页面的header和html文本，所以如果要让我们的异常返回json格式的信息，需要继承HttpException并重写这两个方法
- HttpException
+通过分析HttpException的get_body,get_header源码我们可以知道，这两个方法分别组成了默认异常页面的header和html文本，所以如果要让我们的异常返回json格式的信息，需要继承HttpException并重写这两个方法.  **万不得已,不要动框架源代码**  
+ HttpException 源代码部分
 ```
 class HTTPException(Exception):
 
-"""
-Baseclass for all HTTP exceptions. This exception can be called as WSGI
-application to render a default error page or you can catch the subclasses
-of it independently and render nicer error messages.
-"""
+    """
+    Baseclass for all HTTP exceptions.  This exception can be called as WSGI
+    application to render a default error page or you can catch the subclasses
+    of it independently and render nicer error messages.
+    """
 
-code = None
-description = None
+    code = None
+    description = None
 
-def __init__(self, description=None, response=None):
-Exception.__init__(self)
-if description is not None:
-self.description = description
-self.response = response
+    def __init__(self, description=None, response=None):
+        Exception.__init__(self)
+        if description is not None:
+            self.description = description
+        self.response = response
 
-def get_body(self, environ=None):
-"""Get the HTML body."""
-return text_type((
-u'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">\n'
-u'<title>%(code)s %(name)s</title>\n'
-u'<h1>%(name)s</h1>\n'
-u'%(description)s\n'
-) % {
-'code': self.code,
-'name': escape(self.name),
-'description': self.get_description(environ)
-})
+    def get_body(self, environ=None):
+        """Get the HTML body."""
+        return text_type((
+            u'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">\n'
+            u'<title>%(code)s %(name)s</title>\n'
+            u'<h1>%(name)s</h1>\n'
+            u'%(description)s\n'
+        ) % {
+            'code':         self.code,
+            'name':         escape(self.name),
+            'description':  self.get_description(environ)
+        })
 
-def get_headers(self, environ=None):
-"""Get a list of headers."""
-return [('Content-Type', 'text/html')]
+    def get_headers(self, environ=None):
+        """Get a list of headers."""
+        return [('Content-Type', 'text/html')]
 ```
-APIException
+app\libs\erro.py
 ```
+
+from werkzeug.exceptions import HTTPException
+from flask import request,json
+
+# 重写 HTTPException
+
 class APIException(HTTPException):
-code = 500
-error_code = 999
-msg = 'sorry, we make a mistake'
+    # 定义默认异常信息
+    code = 500
+    msg = 'sorry, we make a mistake'
+    erro_code = 999     # 自定义的错误码   # 建议新建一个code.md记录自定义的错误码
 
-def __init__(self, msg=None, code=None, error_code=None,
-headers=None):
-if code:
-self.code = code
-if error_code:
-self.error_code = error_code
-if msg:
-self.msg = msg
-super(APIException, self).__init__(self.msg, None)
+    def __init__(self, msg = None, code = None, erro_code = None,
+                headers = None):   # 给定None ,不传就是默认值
 
-def get_body(self, environ=None):
-body = dict(
-msg=self.msg,
-error_code=self.error_code,
-request=request.method+' '+self.get_url_no_param()
-)
-text = json.dumps(body)
-return text
+        # 传了的话，就是选传的值
+        if code:
+            self.code = code
+        if erro_code:
+            self.erro_code = erro_code
+        if msg:
+            self.msg = msg   
+        super(APIException, self).__init__(self.msg, None)   # 继承
 
-def get_headers(self, environ=None):
-return [('Content-Type', 'application/json')]
+    def get_body(self, environ=None):
+        body = dict(
+            msg = self.msg,
+            erro_code = self.erro_code,
+            # request = 'POST v1/client/register'
+            request = request.method+' '+self.get_url_no_param() 
+        )       
+        text = json.dumps(body)  # 将字典转换为json 文本  json 序列化
+        return text
 
-@staticmethod
-def get_url_no_param():
-full_path = request.full_path
-main_path = full_path.split('?')
-return main_path[0]
+    def get_headers(self, environ=None):
+        return [('Content-Type', 'application/json')]  # 将返回标识成json
+
+    @staticmethod
+    def get_url_no_param():  # 没有？后面的参数
+        full_path = request.full_path  # 拿到 url完整路径
+        main_path = full_path.split('?') # 去掉？和后面
+        return main_path[0]
+
+
 ```
