@@ -6,6 +6,9 @@ from flask import request
 from app.libs.enums import ClientTypeEnum
 from app.models.user import User
 
+# from werkzeug.exceptions import HTTPException   #  异常
+from app.libs.erro_code import ClientTypeErro   # 导入自定义异常
+
 api = Redprint('client')  # 实例化一个Redprint
 
 @api.route('/register', methods = ['POST'] )  # 路由注册  # 因为这里把POST打成PSOT，导致不能使用POST访问，状态码405
@@ -27,6 +30,8 @@ def create_client():
             # ClientTypeEnum.USER_MINA: __register_user_by_MINA   # 可在此处构建多种枚举类型
         }
         promise[form.type.data]()
+    else:
+        raise ClientTypeErro()  # 抛出自定义异常
     return 'sucess'  #  暂时返回sucess
 #总 ↑
 
