@@ -1,12 +1,13 @@
 
 
-from wtforms import Form, StringField, IntegerField ,ValidationError    # 字符串类型,数字类型,异常
+from wtforms import  StringField, IntegerField ,ValidationError    # 字符串类型,数字类型,异常
 from wtforms.validators import DataRequired, length,  Email, Regexp
 from app.libs.enums import ClientTypeEnum
 from app.models.user import User
+from app.validators.base import BaseForm as Form # 改继承BaseForm
 
 # 构建client验证器
-class ClientForm(Form):
+class ClientForm(Form):  
     account = StringField(validators=[DataRequired(), length(min=1, max=32)])
     secret = StringField()   # 由于客户端类型的不同，密码不一定要传入
     type = IntegerField(validators=[DataRequired()])
