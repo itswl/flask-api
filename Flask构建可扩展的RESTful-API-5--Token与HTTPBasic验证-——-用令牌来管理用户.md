@@ -186,7 +186,8 @@ def create_blueprint_v1():
 
 ### 3.Token的用处
 
-![成功拿到token](https://upload-images.jianshu.io/upload_images/14597179-00e4e57198ea8398.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![成功拿到token](https://upload-images.jianshu.io/upload_images/14597179-0682ece851c33e40.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 我们不可能让任何一个用户都来访问我们获取用户资料的接口，必须对这个加以控制，也就是说只有确定了身份的用户可以访问我们的接口。
 
 如何对这个接口做保护呢？
@@ -229,6 +230,9 @@ def get_user():
 除了自定义发送账号和密码之外，HTTP这种协议本身就有多种规范，来允许我们来传递账号和密码。其中一种就是HTTPBasic
 
 HTTPBasic：需要在HTTP请求的头部设置一个固定的键值对key=Authorization,value=basic base64(account:psd)
+![](https://upload-images.jianshu.io/upload_images/14597179-bd0bcffaff1f7451.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](https://upload-images.jianshu.io/upload_images/14597179-258ed95eac5b0760.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 
 ### 2.以BasicAuth方式来发送token
 
@@ -250,33 +254,58 @@ HTTPBasic：需要在HTTP请求的头部设置一个固定的键值对key=Author
 
 ### 1.验证token
 
+app\libs\token_auth.py
 ```
+# 编写一个验证token的装饰器
+
+from flask_httpauth import HTTPBasicAuth
+
+from flask import current_app, g
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, BadSignature, \
+          SignatureExpired
+
+from collections import namedtuple
+
+from app.libs.erro_code import AuthFailed
+
 auth = HTTPBasicAuth()
+
 User = namedtuple('User', ['uid', 'ac_type', 'scope'])
+
+# @auth.verify_password
+# def verify_password(account, password):
+
+#   # 需要在HTTP请求的头部设置一个固定的键值对
+#   # key=Authorization,value=basic base64(account:psd)
+#   #    imwl@live.com:12345678   编码后 aW13bEBsaXZlLmNvbToxMjM0NTY3OA==
+#   #  key=Authorization,value=basic aW13bEBsaXZlLmNvbToxMjM0NTY3OA==
+#     return True
 
 @auth.verify_password
 def verify_password(token, password):
-user_info = verify_auth_token(token)
-if not user_info:
-return False
-else:
-g.user = user_info
+    user_info =  verify_auth_token(token) # token 赋值给 user_info
+    if not user_info:
+        return False
+    else:
+        g.user = user_info  # g 变量 ,代理模式
+        return True
 
-return True
 
 def verify_auth_token(token):
-s = Serializer(current_app.config['SECRET_KEY'])
-try:
-data = s.loads(token)
-# token不合法抛出的异常
-except BadSignature:
-raise AuthFailed(msg='token is valid', error_code=1002)
-# token过期抛出的异常
-except SignatureExpired:
-raise AuthFailed(msg='token is expired', error_code=1003)
-uid = data['uid']
-ac_type = data['type']
-return User(uid, ac_type, '')
+    s = Serializer(current_app.config['SECRET_KEY'])
+    try:
+        data = s.loads(token)   # 解密 token
+    # token不合法抛出的异常
+    except BadSignature:
+        raise AuthFailed(msg='token is valid', erro_code=1002)
+    # token过期抛出的异常
+    except SignatureExpired:
+        raise AuthFailed(msg='token is expired', erro_code=1003)
+
+    uid = data['uid']
+    ac_type = data['type']   # 生成令牌的时候写入了 uid ac_type
+
+    return User(uid, ac_type, '')   # 定义对象式 接口返回回去 ,scope 先返回为空字符串
 ```
 ### 2.视图函数的编写
 ```
@@ -293,16 +322,16 @@ return jsonify(r), 200
 ### 3.重写后的get_or_404,抛出自定义异常
 ```
 def get_or_404(self, ident):
-rv = self.get(ident)
-if not rv:
-raise NotFound()
-return rv
+    rv = self.get(ident)
+    if not rv:
+        raise NotFound()
+    return rv
 
 def first_or_404(self):
-rv = self.first()
-if not rv:
-raise NotFound()
-return rv
+    rv = self.first()
+    if not rv:
+        raise NotFound()
+    return rv
 ```
 ### 4.获取令牌信息
 ```
