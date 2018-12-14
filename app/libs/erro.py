@@ -28,7 +28,7 @@ class APIException(HTTPException):
             msg = self.msg,
             erro_code = self.erro_code,
             # request = 'POST v1/client/register'
-            request = request.method+' '+self.get_url_no_param() 
+            request = request.method+' '+ self.get_url_no_param() 
         )       
         text = json.dumps(body)  # 将字典转换为json 文本  json 序列化
         return text
@@ -38,7 +38,7 @@ class APIException(HTTPException):
 
     @staticmethod
     def get_url_no_param():  # 没有？后面的参数
-        full_path = request.full_path  # 拿到 url完整路径
+        full_path = str(request.full_path)  # 拿到 url完整路径
         main_path = full_path.split('?') # 去掉？和后面
         return main_path[0]
 

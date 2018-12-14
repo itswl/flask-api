@@ -2,7 +2,7 @@
 from sqlalchemy import inspect, Column, Integer, String, SmallInteger, orm
 from werkzeug.security import generate_password_hash, check_password_hash
 
-# from app.libs.error_code import NotFound, AuthFailed
+from app.libs.erro_code import NotFound, AuthFailed
 from app.models.base import Base , db #, MixinJSONSerializer
 import datetime
 
@@ -16,6 +16,9 @@ class User(Base):
 
     def keys(self):
         return ['id', 'email', 'nickname', 'auth']
+
+    # def __getitem__(self,item):  # 提取到公共类中 base 
+    #     return getattr(self,item) 
 
     @property               
     def password(self):
@@ -34,18 +37,17 @@ class User(Base):
             user.password = secret
             db.session.add(user)
 
-    # @staticmethod
-    # def verify(email, password):
-    #     user = User.query.filter_by(email=email).first_or_404()
-    #     if not user.check_password(password):
-    #         raise AuthFailed()
-    #     scope = 'AdminScope' if user.auth == 2 else 'UserScope'
-    #     return {'uid': user.id, 'scope': scope}
+    @staticmethod
+    def verify(email, password):
+        user = User.query.filter_by(email=email).first_or_404()   # 查询出当前用户
+        if not user.check_password(password):  # 检验密码
+            raise AuthFailed()   #抛出异常
+        return {'uid': user.id}  #成功，返回uid
 
-    # def check_password(self, raw):
-    #     if not self._password:
-    #         return False
-    #     return check_password_hash(self._password, raw)
+    def check_password(self, raw):   # 密码检验
+        if not self._password:
+            return False
+        return check_password_hash(self._password, raw)
 
     # def _set_fields(self):
     #     # self._exclude = ['_password']

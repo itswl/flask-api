@@ -25,7 +25,7 @@ class ClientForm(Form):
 
 class UserEmailForm(ClientForm):
     account = StringField(validators=[
-        Email(message='validate email')
+        Email(message='invalidate email')
         ])  # 必须是Email
     secret = StringField(validators=[
         DataRequired(),

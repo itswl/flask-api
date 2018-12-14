@@ -10,7 +10,7 @@
 '''
 from wtforms import Form
 from app.libs.erro_code import ParameterException
-from flask import request
+from flask import request,jsonify
 
 class BaseForm(Form):
     # def __init__(self, data):
