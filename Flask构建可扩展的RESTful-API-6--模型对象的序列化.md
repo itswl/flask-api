@@ -17,40 +17,71 @@ For example, to support arbitrary iterators, you could implement
 default like this::
 
 def default(self, o):
-try:
-iterable = iter(o)
-except TypeError:
-pass
-else:
-return list(iterable)
-return JSONEncoder.default(self, o)
+    try:
+        iterable = iter(o)
+    except TypeError:
+        pass
+    else:
+        return list(iterable)
+    return JSONEncoder.default(self, o)
 """
-if isinstance(o, datetime):
-return http_date(o.utctimetuple())
-if isinstance(o, date):
-return http_date(o.timetuple())
-if isinstance(o, uuid.UUID):
-return str(o)
-if hasattr(o, '__html__'):
-return text_type(o.__html__())
-return _json.JSONEncoder.default(self, o)
+    if isinstance(o, datetime):
+        return http_date(o.utctimetuple())
+    if isinstance(o, date):
+        return http_date(o.timetuple())
+    if isinstance(o, uuid.UUID):
+        return str(o)
+    if hasattr(o, '__html__'):
+        return text_type(o.__html__())
+    return _json.JSONEncoder.default(self, o)
 ```
 目前的default是没有提供对对象的序列化的，所以我们这里最关键的就是要重写default方法。在重写的过程中实现对对象的序列化就可以了
 
 ### 2.不完美的对象转字典
 
 我们首先要做到的就是让Flask可以调用到我们自己定义的default函数。要做到这一点，我们需要继承JSONEncoder，然后重写defualt方法，然后继承Flask，在子类里，替换掉Flask原有的json_encoder对象。然后，是实例化Flask核心对象的时候，使用我们的子类进行实例化
+app\__init__.py
 ```
+from flask import Flask as _Flask
+
+from flask.json import JSONEncoder as _JSONEncoder
+
 class JSONEncoder(_JSONEncoder):
+	def default(self,o):
+		# return o.__dict__  # 内置方法，将对象转化为字典  # 缺点是只能转换实例变量，不能将类变量也转换成字典
+    return dict(o)
 
-def default(self, o):
-# 只能转换实例变量
-return o.__dect__
+class Flask(_Flask):  # 定义自己的Flask核心对象，继承原来的Flask核心对象
+	json_encoder = JSONEncoder # 替换原本的JSONEncoder
 
-class Flask(_Flask):
-json_encoder = JSONEncoder()
+
+# 将Blueprint注册到flask核心对象上,并传入一个前缀'/v1'
+def register_blueprints(app):
+    # from app.api.v1.user import user
+    # from app.api.v1.book import book
+    # app.register_blueprint(user)
+    # app.register_blueprint(book)
+    from app.api.v1 import create_blueprint_v1
+    app.register_blueprint(create_blueprint_v1(), url_prefix = '/v1')
+
+def registe_plugin(app):  # 插件的注册
+    from app.models.base import db
+    db.init_app(app)
+
+    with app.app_context():  # 上下文环境 把app推入到上下文栈中 才能使用create_all
+        db.create_all()  # 来创建所有数据库，数据表
+
+def create_app():
+    app = Flask(__name__)   # 实例化flask核心对象
+    app.config.from_object('app.config.secure')  # 读取配置文件下的secure
+    app.config.from_object('app.config.setting') # 读取配置文件下的setting
+
+    register_blueprints(app)    # 注册蓝图到核心对象上
+    registe_plugin(app)  # 最后调用 registe_plugin
+
+    return app
 ```
-上面的写法o.__dect__只能转换实例变量，不能讲类变量也转换成字典。
+上面的写法o.__dict__只能转换实例变量，不能将类变量也转换成字典。
 
 ### 3.深入理解dict机制
 
@@ -76,60 +107,54 @@ keys 方法的目的就是为了拿到字典里所有的键，至于说这些键
 
 而dict会以中括号的形式来拿到对应的值，如o["name"]，但是默认是不能这么访问的，我们需要编写__getitem__函数
 ```
-class Person:
-name = 'gwf'
-age = 18
+r = {'name': 'weilai'}  # 直接定义一个字典
 
-def __init__(self):
-self.gender = 'male'
+r = dict(name= 'weilai') # 使用dict函数
 
-def keys(self):
-return ('name', 'age', 'gender')
+class Wei():
+    name = 'weilai'
+    age = 'age'
 
-def __getitem__(self, item):
-return getattr(self, item)
+    def __init__(self):
+        self.gender = 'male'
 
-o = Person()
-print(dict(o))
-# {'name': 'gwf', 'age': 18, 'gender': 'male'}
-```
+    def keys(self):   
+        return ('name','age','gender')  #  取到 key ,  做到自定义key 
+        # # return ('name',)  # 一个元素的元组
+        # return ['name']  # return 序列类型的都可以
+
+    def __getitem__(self,item):  
+        return getattr(self,item)   # 取到 key对应的value
+
+o = Wei()
+print(dict(o))   # {'name': 'weilai', 'age': 'age', 'gender': 'male'}
+ ```
 这样我们就成功的讲一个对象转化成了字典的形式，并且无论类变量和实例变量，都可以转化，更加灵活的是，我们可以自己控制，那些变量需要转化，哪些变量不需要转化
 
-> 注意： 如果我们只想序列化一个元素
-```
-def keys(self):
-return ('name')
-```
-这样是不行的，因为只有一个元素的元素不是这样定义的，我们需要在后面加上一个逗号
-```
-def keys(self):
-return ('name',)
-```
 ### 4.序列化SQLALChemy模型
 
 有了之前的基础，我们就知道怎么序列化user对象了，我们只需要在User类中定义keys和getitem方法，然后在default函数中使用dict()函数即可
 ```
 class JSONEncoder(_JSONEncoder):
-
-def default(self, o):
-return dict(o)
+    def default(self, o):
+        return dict(o)
 
 class Flask(_Flask):
-json_encoder = JSONEncoder
+    json_encoder = JSONEncoder
 ```
 models/user.py
 ```
 class User(Base):
-id = Column(Integer, primary_key=True)
-email = Column(String(50), unique=True, nullable=False)
-auth = Column(SmallInteger, default=1)
-nickname = Column(String(24), nullable=False)
-_password = Column('password', String(128))
+    id = Column(Integer, primary_key=True)
+    email = Column(String(50), unique=True, nullable=False)
+    auth = Column(SmallInteger, default=1)
+    nickname = Column(String(24), nullable=False)
+    _password = Column('password', String(128))
 
 # SQLALChemy的实例化是不会调用__init__函数的，要想让他调用就需要
 # @orm.reconstructor这个装饰器
-@orm.reconstructor
-def __init__(self):
+    @orm.reconstructor
+    def __init__(self):
 self.fields = ['id', 'email', 'nickname']
 
 def keys(self):
@@ -151,16 +176,18 @@ def append(self, *keys):
 优化3：我们的default函数需要增加容错性
 ```
 class JSONEncoder(_JSONEncoder):
+	def default(self,o):
+		# return o.__dict__  # 内置方法，将对象转化为字典  # 缺点是只能转换实例变量，不能将类变量也转换成字典
+		# return dict(o) # 考虑不全面.o得有上次定义的那两种方法才不会报错
 
-def default(self, o):
-if hasattr(o, 'keys') and hasattr(o, '__getitem__'):
-return dict(o)
-# 兼容其他的序列化
-if isinstance(o, date):
-return o.strftime('%Y-%m-%d')
-raise ServerError()
+		if hasattr(o, 'keys') and hasattr(o, '__getitem__'):
+			return dict(o)   # 得有这两种方法 才会return dict(o)
+		if isinstance(o, date):  # 如果是 时间类型
+			return o.strftime('%Y-%m-%d')
+		raise ServerError()
 ```
-优化4：之前编写的新的Flask类，JsonEncoder类都是不会轻易改变的，但是app.py中的一些其他方法，却是 经常改变的，应该把他们放在init文件中
+优化4：之前编写的新的Flask类，JsonEncoder类都是不会轻易改变的，放到app.py中。
+一些其他方法，却是 经常改变的，应该把他们放在init文件中
 
 ### 6.ViewModel对于API有意义吗？
 
