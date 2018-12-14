@@ -308,50 +308,121 @@ def verify_auth_token(token):
     return User(uid, ac_type, '')   # 定义对象式 接口返回回去 ,scope 先返回为空字符串
 ```
 ### 2.视图函数的编写
+app\api\v1\user.py
 ```
-@api.route('/<int:uid>', methods=['GET'])
+
+from app.libs.redprint import Redprint
+from app.libs.token_auth import auth
+from app.models.user import User
+from app.models.base import db
+from flask import jsonify
+
+api = Redprint('user')
+#@api.route('/get')  URL中不应该包含动词
+@api.route('/<int:uid>', methods = ['GET'])  # 获取到用户的uid
 @auth.login_required
-def get_user(uid):
-user = User.query.get_or_404(uid)
-r = {
-'nickname': user.nickname,
-'email': user.email
-}
-return jsonify(r), 200
+def get_user(uid):   # 接收 uid
+    user = User.query.get_or_404 (uid) # 获取到用户，用get_or_404简化判断用户是否存在
+                                # 因为get_or_404 抛出的不是APIException,所以要重写
+                                # query 属性下的方法 
+    r = {
+        'nickname':user.nickname,
+        'email':user.email,
+        'password':user.password
+    }         #  追求更好的写法
+
 ```
 ### 3.重写后的get_or_404,抛出自定义异常
+app\models\base.py
 ```
-def get_or_404(self, ident):
-    rv = self.get(ident)
-    if not rv:
-        raise NotFound()
-    return rv
+from datetime import datetime
 
-def first_or_404(self):
-    rv = self.first()
-    if not rv:
-        raise NotFound()
-    return rv
+from flask_sqlalchemy import SQLAlchemy as _SQLAlchemy, BaseQuery
+from sqlalchemy import Column, Integer, SmallInteger
+from contextlib import contextmanager
+
+
+class SQLAlchemy(_SQLAlchemy):
+    @contextmanager
+    def auto_commit(self):
+        try:
+            yield
+            self.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            raise e
+
+from app.libs.erro_code import NotFound
+class Query(BaseQuery):
+    def filter_by(self, **kwargs):
+        if 'status' not in kwargs.keys():
+            kwargs['status'] = 1
+        return super(Query, self).filter_by(**kwargs)
+
+    #  仿照源码改写get_or_404，覆盖原来的 get_or_404]
+
+    def get_or_404(self, ident):
+        """Like :meth:`get` but aborts with 404 if not found instead of returning ``None``."""
+
+        rv = self.get(ident)
+        if rv is None:
+            raise NotFound()
+        return rv
+
+    def first_or_404(self):
+
+        rv = self.first()
+        if rv is None:
+            raise NotFound()
+        return rv
+
+
+db = SQLAlchemy(query_class=Query)
+
+
+class Base(db.Model):
+    __abstract__ = True
+    create_time = Column(Integer)
+    status = Column(SmallInteger, default=1)
+
+    def __init__(self):
+        self.create_time = int(datetime.now().timestamp())
+
+    @property
+    def create_datetime(self):
+        if self.create_time:
+            return datetime.fromtimestamp(self.create_time)
+        else:
+            return None
+
+    def set_attrs(self, attrs_dict):
+        for key, value in attrs_dict.items():
+            if hasattr(self, key) and key != 'id':
+                setattr(self, key, value)
+
+    def delete(self):
+        self.status = 0
+
 ```
 ### 4.获取令牌信息
 ```
 @api.route('/secret', methods=['POST'])
 def get_token_info():
 """获取令牌信息"""
-form = TokenForm().validate_for_api()
-s = Serializer(current_app.config['SECRET_KEY'])
-try:
-data = s.loads(form.token.data, return_header=True)
-except SignatureExpired:
-raise AuthFailed(msg='token is expired', error_code=1003)
-except BadSignature:
-raise AuthFailed(msg='token is invalid', error_code=1002)
+    form = TokenForm().validate_for_api()
+    s = Serializer(current_app.config['SECRET_KEY'])
+    try:
+        data = s.loads(form.token.data, return_header=True)
+    except SignatureExpired:
+        raise AuthFailed(msg='token is expired', error_code=1003)
+    except BadSignature:
+        raise AuthFailed(msg='token is invalid', error_code=1002)
 
-r = {
-'scope': data[0]['scope'],
-'create_at': data[1]['iat'],
-'expire_in': data[1]['exp'],
-'uid': data[0]['uid']
-}
-return jsonify(r)
+    r = {
+        'scope': data[0]['scope'],
+        'create_at': data[1]['iat'],
+        'expire_in': data[1]['exp'],
+        'uid': data[0]['uid']
+    }
+    return jsonify(r)
 ```
