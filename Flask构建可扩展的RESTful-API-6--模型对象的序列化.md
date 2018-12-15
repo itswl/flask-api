@@ -155,17 +155,17 @@ class User(Base):
 # @orm.reconstructor这个装饰器
     @orm.reconstructor
     def __init__(self):
-self.fields = ['id', 'email', 'nickname']
+        self.fields = ['id', 'email', 'nickname']
 
-def keys(self):
-return self.fields
+    def keys(self):
+	return self.fields
 
-# 支持隐藏字段
-def hide(self, *keys):
-[self.fields.remove(key) for key in keys]
-# 支持添加字段
-def append(self, *keys):
-[self.fields.append(key) for key in keys]
+	# 支持隐藏字段
+    def hide(self, *keys):
+	[self.fields.remove(key) for key in keys]
+	# 支持添加字段
+    def append(self, *keys):
+	[self.fields.append(key) for key in keys]
 ```
 ### 5.完善序列化
 
