@@ -3,54 +3,65 @@
 1.204 的HTTP状态码代表的是NO CONTENT，无内容。所以如果状态码是204，那么无论返回什么，前端都接受不到，但是我们要尽量返回格式化的信息，让前端能够判断，为此，我们可以使用状态码202，并且添加一个特殊的error_code=-1 来代表删除操作
 
 2.由于我们的删除是逻辑删除，使用get的方法会一直可以查询出当前用户，这里我们应该使用filter_by()，传入status=1，好在，我们之前已经在基类重写了filter_by()，所以我们只需要调用filter_by()传入id即可
+app\api\v1\user.py
 ```
-@api.route('/<int:uid>', methods=['DELETE'])
+@api.route('/<int:uid>', methods = ['DELETE']) 
 @auth.login_required
 def delete_user(uid):
-with db.auto_commit():
-user = User.query.filter_by(id=uid).first_or_404()
-user.delete()
-return DeleteSuccess()
+    with db.auto_commit():
+        # user = User.query.get_or_404(uid)   #软删除后，用get 还是能查询到，所以改写
+        user = User.query.filter_by(id=uid).first_or_404()
+        user.delete()     #  软删除
+    # return 'delete sucess'
+    return DeleteSuccess()
+
 ```
+app\libs\erro_code.py
 ```
 class DeleteSuccess(Success):
-code = 202
-error_code = -1
+    code = 202
+    error_code = 1
 ```
 3.防止超权现象 id=1的用户，不能删除id=2的用户，为了解决这个问题，我们的uid不能由用户传入，而是应该从他传入的token中取出来。由于我们之前做token验证的时候，已经把取出来的信息存入到了flask的g中，所以我们只需要从g中取出来做判断即可
 ```
-@api.route('', methods=['DELETE'])
+@api.route('', methods = ['DELETE'])   
 @auth.login_required
 def delete_user():
-uid = g.user.uid
-with db.auto_commit():
-user = User.query.filter_by(id=uid).first_or_404()
-user.delete()
-return DeleteSuccess()
-```
-> 两个知识点 1.g.user.uid之所以可以这样用.的方式获取uid，是因为我们在向g中存储user的时候，使用的是namedtuple，而不是dict，不然我们就只能g.user['uid']这样获取了
+    uid = g.user.uid   #  防止超权，从token中读取  已存储在 g 变量中 ，g 变量线程隔离。
+                    # 对于管理员来说，可以超权，删除别的用户
 
-2.即使两个用户同时访问这个接口，我们也不会出错，g会正确的指向每一个请求的user，这是因为g是线程隔离的
+    with db.auto_commit():
+
+        # user = User.query.get_or_404(uid)   #软删除后，用get 还是能查询到，所以改写
+        user = User.query.filter_by(id=uid).first_or_404()
+        user.delete()     #  软删除
+    # return 'delete sucess'
+    return DeleteSuccess()
+```
+> 两个知识点
+1.g.user.uid之所以可以这样用.的方式获取uid，是因为我们在向g中存储user的时候，使用的是namedtuple，而不是dict，不然我们就只能g.user['uid']这样获取了  
+> 2.即使两个用户同时访问这个接口，我们也不会出错，g会正确的指向每一个请求的user，这是因为g是线程隔离的
 
 4.我们是需要一个超级管理员用户的试图函数super_delete_user，可以通过传入uid来删除指定用户的。但是对这两个接口，普通用户应该只能访问delete_user，而超级管理员都能够访问。
 
-首先我们需要创建一个管理员用户，不过管理员用户不能通过公开API来创建，而应该直接在数据库里创建，但是这又涉及到一个问题，就是直接在数据库里创建，密码不好生成。所以最好的方式是创建一个离线脚本文件
+首先我们需要创建一个管理员用户，不过管理员用户不能通过公开API来创建，而应该直接在数据库里创建，但是这又涉及到一个问题，就是直接在数据库里创建，密码不好生成。所以最好的方式是创建一个离线脚本文件.也可以普通注册，改auth为2
 ```
 from app import create_app
 from app.models.base import db
 from app.models.user import User
 
-__author__ = "gaowenfeng"
-
 app = create_app()
 with app.app_context():
-with db.auto_commit():
-user = User()
-user.nickname = 'super'
-user.password = '123456'
-user.email = '999@qq.com'
-user.auth = 2
-db.session.add(user)
+    with db.auto_commit():
+        # 离线脚本，创建一个超级管理员
+        user = User()
+        user.nickname = 'Super'
+        user.password = '123456'
+        user.email = '999@qq.com'
+        user.auth = 2
+        db.session.add(user)
+
+# 直接运行就能创建
 ```
 这个脚本不仅仅可以生成管理员，还可以使用它生成大量的假数据，测试数据
 
