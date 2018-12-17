@@ -3,7 +3,7 @@ from sqlalchemy import inspect, Column, Integer, String, SmallInteger, orm
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app.libs.erro_code import NotFound, AuthFailed
-from app.models.base import Base , db #, MixinJSONSerializer
+from app.models.base import Base , db ,MixinJSONSerializer
 import datetime
 
 
@@ -42,7 +42,8 @@ class User(Base):
         user = User.query.filter_by(email=email).first_or_404()   # 查询出当前用户
         if not user.check_password(password):  # 检验密码
             raise AuthFailed()   #抛出异常
-        return {'uid': user.id}  #成功，返回uid
+        scope = 'AdminScope' if user.auth == 2 else 'UserScope'  # 判断用户作用域，假设只有两个作用域
+        return {'uid': user.id,'scope': scope}  #成功，返回uid   # 返回scope
 
     def check_password(self, raw):   # 密码检验
         if not self._password:

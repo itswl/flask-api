@@ -30,10 +30,10 @@ def get_token():
     expiration = current_app.config['TOKEN_EXPIRATION']  #过期时间
     token = generator_auth_token(identity['uid'],
                                 form.type.data,
-                                None,
+                                identity['scope'],
                                 expiration=expiration)
     t = {
-            'token': token.decode('utf-8')  # 因为是byte
+            'token': token.decode('ascii')  # 因为是byte
         }
     return jsonify(t), 201  # 返回 json 字典
 
@@ -42,5 +42,6 @@ def generator_auth_token(uid, ac_type, scope=None,expiration=7200):
     s = Serializer(current_app.config['SECRET_KEY'],expires_in=expiration)  # expires_in 生成令牌的有效期
     return s.dumps({
                     'uid': uid,
-                    'type': ac_type.value
+                    'type': ac_type.value,
+                    'scope': scope
                 })  # 将想写入的信息以字典形式写入令牌

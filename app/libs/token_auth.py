@@ -4,13 +4,14 @@
 
 from flask_httpauth import HTTPBasicAuth
 
-from flask import current_app, g
+from flask import current_app, g, request
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, BadSignature, \
           SignatureExpired
 
 from collections import namedtuple
 
-from app.libs.erro_code import AuthFailed
+from app.libs.erro_code import AuthFailed, Forbidden
+from app.libs.scope import is_in_scope
 
 auth = HTTPBasicAuth()
 
@@ -48,5 +49,9 @@ def verify_auth_token(token):
 
     uid = data['uid']
     ac_type = data['type']   # 生成令牌的时候写入了 uid ac_type
-
-    return User(uid, ac_type, '')   # 定义对象式 接口返回回去 ,scope 先返回为空字符串
+    scope = data['scope']
+    # 也可在这拿到当前request的视图函数
+    allow = is_in_scope(scope ,request.endpoint) # request.endpoint  拿到当前视图函数的endpoint
+    if not allow:
+        raise Forbidden()
+    return User(uid, ac_type, scope)   # 定义对象式 接口返回回去 ,scope 先返回为空字符串

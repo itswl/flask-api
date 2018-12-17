@@ -24,7 +24,8 @@ class Redprint:
             url_prefix = '/'+self.name   # 定义 Redprint 前缀
         # python的自动拆包
         for f, rule, options in self.mound:
-            endpoint = options.pop("endpoint", f.__name__)
+            # endpoint = options.pop("endpoint", f.__name__)
+            endpoint = self.name + '+' + options.pop("endpoint", f.__name__) # 改成Redprint+视图函数名字
             # 将视图函数注册到蓝图上来
             bp.add_url_rule(url_prefix + rule, endpoint, f, **options)
 
