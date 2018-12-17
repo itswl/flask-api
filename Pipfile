@@ -16,4 +16,4 @@ requests = "==2.18.4"
 pylint = "*"
 
 [requires]
-python_version = "3.7s"
+python_version = "3.7"

@@ -12,8 +12,8 @@ def framework_error(e):
     if isinstance(e, HTTPException):  # 转化成APIException
         code = e.code
         msg = e.description
-        error_code = 1007
-        return APIException(msg, code, error_code)
+        erro_code = 1007
+        return APIException(msg, code, erro_code)
     else:
         if not app.config['DEBUG']: # 判断是否在调试模式,不再,直接返回
             return ServerError()
