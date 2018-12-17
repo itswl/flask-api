@@ -7,4 +7,5 @@
 [《 Flask构建可扩展的RESTful-API 》（gitbook）](https://flask-api.gitbook.io/api/) 
 
 [《 Flask构建可扩展的RESTful-API 》(github pages托管)](https://github.com/itswl/flask_api) 
-[源代码在code分支]https://github.com/itswl/flask_api/tree/code
+
+[源代码在code分支](https://github.com/itswl/flask_api/tree/code)
