@@ -16,4 +16,15 @@ with app.app_context():
         user.auth = 2
         db.session.add(user)
 
+with app.app_context():
+    for v in range(1, 100):
+        with db.auto_commit():
+        # 离线脚本，批量创建普通用户
+            user = User()
+            user.nickname = 'user'+str(v)
+            user.password = '123456'
+            user.email = 'user'+str(v)+'@qq.com'
+            user.auth = 1
+            db.session.add(user)
+
 # 直接运行就能创建
