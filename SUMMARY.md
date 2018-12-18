@@ -8,3 +8,4 @@
 * [5. Token与HTTPBasic验证-——-用令牌来管理用户](Flask构建可扩展的RESTful-API-5--Token与HTTPBasic验证-——-用令牌来管理用户.md)
 * [6. 模型对象的序列化](Flask构建可扩展的RESTful-API-6--模型对象的序列化.md)
 * [7. 权限控制](Flask构建可扩展的RESTful-API-7--权限控制.md)
+* [8. 补充完善](Flask构建可扩展的RESTful-API-8--补充完善.md)
