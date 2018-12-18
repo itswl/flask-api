@@ -1,0 +1,596 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>8. 补充完善 · flask_api</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="WeiLai">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-donate/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="Flask构建可扩展的RESTful-API-7--权限控制.html" />
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"repo":"itswl/flask_api","types":["star"],"size":"small"};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="Flask构建可扩展的RESTful-API-1--起步与红图.html">
+            
+                <a href="Flask构建可扩展的RESTful-API-1--起步与红图.html">
+            
+                    
+                    1. 起步与红图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="Flask构建可扩展的RESTful-API-2--REST基本特征.html">
+            
+                <a href="Flask构建可扩展的RESTful-API-2--REST基本特征.html">
+            
+                    
+                    2. REST基本特征
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="Flask构建可扩展的RESTful-API-3--自定义异常对象.html">
+            
+                <a href="Flask构建可扩展的RESTful-API-3--自定义异常对象.html">
+            
+                    
+                    3. 自定义异常对象
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="Flask构建可扩展的RESTful-API-4--理解WTForms并灵活改造她.html">
+            
+                <a href="Flask构建可扩展的RESTful-API-4--理解WTForms并灵活改造她.html">
+            
+                    
+                    4. 理解WTForms并灵活改造她
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="Flask构建可扩展的RESTful-API-5--Token与HTTPBasic验证-——-用令牌来管理用户.html">
+            
+                <a href="Flask构建可扩展的RESTful-API-5--Token与HTTPBasic验证-——-用令牌来管理用户.html">
+            
+                    
+                    5. Token与HTTPBasic验证-——-用令牌来管理用户
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="Flask构建可扩展的RESTful-API-6--模型对象的序列化.html">
+            
+                <a href="Flask构建可扩展的RESTful-API-6--模型对象的序列化.html">
+            
+                    
+                    6. 模型对象的序列化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="Flask构建可扩展的RESTful-API-7--权限控制.html">
+            
+                <a href="Flask构建可扩展的RESTful-API-7--权限控制.html">
+            
+                    
+                    7. 权限控制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.9" data-path="Flask构建可扩展的RESTful-API-8--补充完善.html">
+            
+                <a href="Flask构建可扩展的RESTful-API-8--补充完善.html">
+            
+                    
+                    8. 补充完善
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >8. 补充完善</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <p><img src="https://upload-images.jianshu.io/upload_images/14597179-430f03fc7686561d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="&#x76F4;&#x63A5;return q &#x65F6;"></p>
+<p>&#x4F1A;&#x62A5;&#x5185;&#x7F6E;&#x9519;&#x8BEF;&#xFF0C;&#x56E0;&#x4E3A;&#x5728;body&#x4E2D;&#x6307;&#x5B9A;&#x4E86;json&#x683C;&#x5F0F;&#x3002;&#x53EF;&#x4EE5;&#x66F4;&#x6539;&#x4E3A;slient&#x6A21;&#x5F0F;</p>
+<p>app\validators\base.py</p>
+<pre><code>
+
+from wtforms import Form
+from app.libs.erro_code import ParameterException
+from flask import request,jsonify
+
+class BaseForm(Form):
+    # def __init__(self, data):
+    def __init__(self):
+        # data = request.json
+        data = request.get_json(silent = True)  #  &#x51FA;&#x73B0;&#x9519;&#x8BEF;&#xFF0C;&#x4E0D;&#x62A5;&#x5F02;&#x5E38;
+        args = request.args.to_dict()  # &#x5B8C;&#x6210;&#x67E5;&#x8BE2;&#x53C2;&#x6570;&#x7684;&#x83B7;&#x53D6;
+        super(BaseForm, self).__init__(data=data,**args)   # &#x8C03;&#x7528;&#x7236;&#x7C7B;&#x6784;&#x9020;&#x51FD;&#x6570;
+
+    def validate_for_api(self):
+        valid = super(BaseForm, self).validate()  # &#x8C03;&#x7528;&#x7236;&#x7C7B;&#x7684;&#x6784;&#x9020;&#x65B9;&#x6CD5; # &#x9A8C;&#x8BC1;&#x662F;&#x5426;&#x901A;&#x8FC7;
+        if not valid:   # &#x6CA1;&#x901A;&#x8FC7;
+            # &#x6240;&#x6709;&#x5F02;&#x5E38;&#x7C7B;&#x4FE1;&#x606F;&#x5728;form errors &#x4E2D; 
+            raise ParameterException(msg=self.errors) #  &#x629B;&#x51FA;&#x5F02;&#x5E38;  # &#x516C;&#x5171;&#x7684;&#x81EA;&#x5B9A;&#x4E49;&#x5F02;&#x5E38;&#x7C7B;
+        return self
+</code></pre><p>&#x641C;&#x7D22;&#x754C;&#x9762;&#x4E0D;&#x9700;&#x8981;&#x8FD4;&#x56DE;&#x5168;&#x90E8;&#x5B57;&#x6BB5;&#xFF0C;&#x8BE6;&#x60C5;&#x9875;&#x9762;&#x5219;&#x8FD4;&#x56DE;&#x5168;&#x90E8;&#x5B57;&#x6BB5;&#x3002;&#x53EF;&#x4EE5;&#x5728;app\modles\book.py&#x4E2D;&#x9690;&#x85CF;</p>
+<pre><code>from sqlalchemy import Column, String, Integer, orm
+
+from app.models.base import Base
+
+
+
+class Book(Base):
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    title = Column(String(50), nullable=False)
+    author = Column(String(30), default=&apos;&#x672A;&#x540D;&apos;)
+    binding = Column(String(20))
+    publisher = Column(String(50))
+    price = Column(String(20))
+    pages = Column(Integer)
+    pubdate = Column(String(20))
+    isbn = Column(String(15), nullable=False, unique=True)
+    summary = Column(String(1000))
+    image = Column(String(50))
+
+    fields = [&apos;id&apos;, &apos;title&apos;, &apos;author&apos;, &apos;binding&apos;,
+                        &apos;publisher&apos;,
+                        &apos;price&apos;,&apos;pages&apos;, &apos;pubdate&apos;, &apos;isbn&apos;,
+                        &apos;summary&apos;,
+                        &apos;image&apos;]
+
+    def keys(self):
+        return self.fields
+
+    def hide(self,key):  
+        self.fields.remove(key)
+        return self
+</code></pre><p><strong>&#x7B2C;&#x4E00;&#x6B21;&#x80FD;&#x591F;&#x9690;&#x85CF;&#x6210;&#x529F;&#xFF0C;&#x800C;&#x7B2C;&#x4E8C;&#x6B21;&#x4F1A;&#x53D7;&#x5230;&#x7B2C;&#x4E00;&#x6B21;&#x7684;&#x5F71;&#x54CD;&#x4ECE;&#x800C;&#x9690;&#x85CF;&#x5931;&#x8D25;</strong>
+<strong>&#x56E0;&#x4E3A;&#x6539;&#x52A8;&#x7684;&#x662F;&#x7C7B;&#x53D8;&#x91CF;</strong>
+&#x6539;&#x52A8;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>from sqlalchemy import Column, String, Integer, orm
+
+from app.models.base import Base
+
+
+
+class Book(Base):
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    title = Column(String(50), nullable=False)
+    author = Column(String(30), default=&apos;&#x672A;&#x540D;&apos;)
+    binding = Column(String(20))
+    publisher = Column(String(50))
+    price = Column(String(20))
+    pages = Column(Integer)
+    pubdate = Column(String(20))
+    isbn = Column(String(15), nullable=False, unique=True)
+    summary = Column(String(1000))
+    image = Column(String(50))
+
+    # fields = [&apos;id&apos;, &apos;title&apos;, &apos;author&apos;, &apos;binding&apos;,
+    #                    &apos;publisher&apos;,
+    #                    &apos;price&apos;,&apos;pages&apos;, &apos;pubdate&apos;, &apos;isbn&apos;,
+    #                    &apos;summary&apos;,
+    #                    &apos;image&apos;]
+
+    &apos;&apos;&apos;
+    &#x7B2C;&#x4E00;&#x6B21;&#x80FD;&#x591F;&#x9690;&#x85CF;&#x6210;&#x529F;&#xFF0C;&#x800C;&#x7B2C;&#x4E8C;&#x6B21;&#x4F1A;&#x53D7;&#x5230;&#x7B2C;&#x4E00;&#x6B21;&#x7684;&#x5F71;&#x54CD;&#x4ECE;&#x800C;&#x9690;&#x85CF;&#x5931;&#x8D25;&#x3002;
+    &#x56E0;&#x4E3A;&#x6539;&#x52A8;&#x7684;&#x662F;&#x7C7B;&#x53D8;&#x91CF;,&#x6539;&#x5199;&#x5982;&#x4E0B;:
+    &apos;&apos;&apos;
+
+    @orm.reconstructor  
+    # &#x56E0;&#x4E3A;&#x901A;&#x8FC7;sqlalchemy&#x521B;&#x5EFA;&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;&#x4E0D;&#x4F1A;&#x88AB;&#x6267;&#x884C;&#xFF0C;&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;&#x88C5;&#x9970;&#x5668;&#x6784;&#x9020;&#x51FD;&#x6570;&#x53EF;&#x4EE5;&#x6267;&#x884C;  
+    # &#x8FD9;&#x5C31;&#x662F;&#x6709;&#x8FFD;&#x6C42;&#x7684;&#x554A;
+    def __init__(self):
+        self.fields = [&apos;id&apos;, &apos;title&apos;, &apos;author&apos;, &apos;binding&apos;,
+                       &apos;publisher&apos;,
+                       &apos;price&apos;,&apos;pages&apos;, &apos;pubdate&apos;, &apos;isbn&apos;,
+                       &apos;summary&apos;,
+                       &apos;image&apos;]   # &#x5B9A;&#x4E49;&#x6210;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x3002;
+
+    def keys(self):
+        return self.fields
+
+    def hide(self,*keys):  # &#x652F;&#x6301;&#x9690;&#x85CF;&#x591A;&#x4E2A;&#x5173;&#x952E;&#x5B57;
+        for key in keys:
+            self.fields.remove(key)
+        return self
+</code></pre><p>&#x5E76;&#x975E;&#x53EA;&#x6709;book&#x6A21;&#x578B;&#x9700;&#x8981;&#x9690;&#x85CF;&#x5B57;&#x6BB5;&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x63D0;&#x53D6;&#x5230;base&#x57FA;&#x7C7B;&#x4E2D;,&#x540C;&#x7406;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x8FFD;&#x52A0;append.</p>
+<pre><code>from sqlalchemy import Column, String, Integer, orm
+
+from app.models.base import Base
+
+
+
+class Book(Base):
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    title = Column(String(50), nullable=False)
+    author = Column(String(30), default=&apos;&#x672A;&#x540D;&apos;)
+    binding = Column(String(20))
+    publisher = Column(String(50))
+    price = Column(String(20))
+    pages = Column(Integer)
+    pubdate = Column(String(20))
+    isbn = Column(String(15), nullable=False, unique=True)
+    summary = Column(String(1000))
+    image = Column(String(50))
+
+    @orm.reconstructor  
+    def __init__(self):
+        self.fields = [&apos;id&apos;, &apos;title&apos;, &apos;author&apos;, &apos;binding&apos;,
+                       &apos;publisher&apos;,
+                       &apos;price&apos;,&apos;pages&apos;, &apos;pubdate&apos;, &apos;isbn&apos;,
+                       &apos;summary&apos;,
+                       &apos;image&apos;]   # &#x5B9A;&#x4E49;&#x6210;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x3002;
+</code></pre><p>app\api\v1\book.py</p>
+<pre><code>from flask import jsonify
+from sqlalchemy import or_  # &#x6A21;&#x7CCA;&#x67E5;&#x8BE2; &#x6216;
+
+from app.libs.redprint import Redprint
+from app.models.book import Book
+from app.validators.forms import BookSearchForm
+
+api=Redprint(&apos;book&apos;)
+
+@api.route(&apos;/create&apos;)
+def create_book():
+    return &apos;create_book&apos;
+@api.route(&apos;/get&apos;)
+def get_book():
+    return &apos;get book&apos;
+@api.route(&apos;/search&apos;)
+def search():
+    #url http://locahost:5000/v1/book/search?q={}
+    # request.args.to_dict() &#x5728;base&#x4E2D;&#x5B8C;&#x6210;
+    form = BookSearchForm().validate_for_api() #  &#x5B8C;&#x6210;&#x9A8C;&#x8BC1;
+    q=&apos;%&apos;+form.q.data+&apos;%&apos;  # &#x6A21;&#x7CCA;&#x641C;&#x7D22;&#x524D;&#x540E;&#x5F97;&#x52A0; %
+    # return q
+    books=Book.query.filter(or_(Book.title.like(q),Book.publisher.like(q))).all()  
+#like &#x6307;&#x5B9A;&#x5173;&#x952E;&#x5B57; q
+    books=[book.hide(&apos;summary&apos;,&apos;id&apos;).append(&apos;pages&apos;) for book in books]   
+# &#x53EA; &#x8FD4;&#x56DE;&#x6307;&#x5B9A;&#x7684; &#x5173;&#x952E;&#x5B57;
+    # &#x9690;&#x85CF;summary&#xFF0C;id.&#x8FFD;&#x52A0;pages.
+    return jsonify(books)
+
+@api.route(&apos;/&lt;int:isbn&gt;/detail&apos;)
+def detail(isbn):
+    book=Book.query.filter_by(isbn=isbn).first_or_404()  
+# detail &#x4E2D;&#x53EF;&#x4EE5;&#x8FD4;&#x56DE;&#x6240;&#x6709;&#x5B57;&#x6BB5;
+    return jsonify(book)
+</code></pre><h3 id="&#x65B0;&#x5EFA;&#x793C;gift&#x6A21;&#x578B;">&#x65B0;&#x5EFA;&#x793C;gift&#x6A21;&#x578B;</h3>
+<p>app\models\gift.py</p>
+<pre><code>from sqlalchemy import Column, String, Boolean, Integer, ForeignKey
+from sqlalchemy.orm import relationship
+
+from app.models.base import Base
+
+
+
+class Gift(Base):
+    id = Column(Integer, primary_key=True)
+
+    # &#x5EFA;&#x7ACB;&#x548C;user&#x5173;&#x7CFB;
+    user = relationship(&apos;User&apos;)
+    uid = Column(Integer, ForeignKey(&apos;user.id&apos;))
+
+    isbn = Column(String(15), nullable=False)
+    launched = Column(Boolean, default=False)
+</code></pre><p>app\api\v1\gift.py</p>
+<pre><code>from flask import g
+
+from app.libs.erro_code import Success, DuplicateGift
+from app.libs.redprint import Redprint
+from app.libs.token_auth import auth
+from app.models.base import db
+from app.models.book import Book
+from app.models.gift import Gift
+
+# &#x5F97;&#x53BB;app\api\v1\__init__.py&#x6CE8;&#x518C;&#x5230;Blueprint
+
+api = Redprint(&apos;gift&apos;)   
+
+
+@api.route(&apos;/&lt;isbn&gt;&apos;, methods=[&apos;POST&apos;])
+@auth.login_required
+def create(isbn):
+    uid = g.user.uid  # &#x62FF;&#x5230;&#x5F53;&#x524D;&#x9700;&#x8981;&#x8D60;&#x9001;&#x793C;&#x7269;&#x7684;uid&#x53F7;
+    with db.auto_commit():
+        Book.query.filter_by(isbn=isbn).first_or_404()  #&#x68C0;&#x6D4B;&#x662F;&#x5426;&#x662F;&#x5728;&#x6570;&#x636E;&#x5E93;&#x4E2D;
+        gift = Gift.query.filter_by(isbn=isbn, uid=uid).first()
+        if gift:   # &#x68C0;&#x6D4B;&#x662F;&#x5426;&#x91CD;&#x590D;
+            raise DuplicateGift()
+        gift = Gift()
+        gift.isbn = isbn
+        gift.uid = uid
+        db.session.add(gift)
+    return Success()
+</code></pre><p>&#x4E3A;token&#x65B0;&#x589E;&#x4E00;&#x4E2A;&#x63A5;&#x53E3;&#x9A8C;&#x8BC1;&#x662F;&#x5426;&#x8FC7;&#x671F;</p>
+<pre><code>@api.route(&apos;/secret&apos;, methods=[&apos;POST&apos;])
+def get_token_info():
+    &quot;&quot;&quot;&#x83B7;&#x53D6;&#x4EE4;&#x724C;&#x4FE1;&#x606F;&quot;&quot;&quot;
+    form = TokenForm().validate_for_api()
+    s = Serializer(current_app.config[&apos;SECRET_KEY&apos;])
+    try:
+        data = s.loads(form.token.data, return_header=True)  # &#x4E0D;&#x62A5;&#x9519;&#x5C31;&#x662F;&#x5408;&#x6CD5;&#x7684;token
+    except SignatureExpired:
+        raise AuthFailed(msg=&apos;token is expired&apos;, erro_code=1003)
+    except BadSignature:
+        raise AuthFailed(msg=&apos;token is invalid&apos;, erro_code=1002)
+
+    r = {
+        &apos;scope&apos;: data[0][&apos;scope&apos;],
+        &apos;create_at&apos;: data[1][&apos;iat&apos;],  # &#x521B;&#x5EFA;&#x65F6;&#x95F4;
+        &apos;expire_in&apos;: data[1][&apos;exp&apos;],   # &#x8FC7;&#x671F;&#x65F6;&#x95F4;
+        &apos;uid&apos;: data[0][&apos;uid&apos;]
+    } # &#x628A;&#x4EE4;&#x724C;&#x4FE1;&#x606F;&#x8BFB;&#x53D6;&#x51FA;&#x6765;&#xFF0C;&#x4EE5;&#x660E;&#x6587;&#x65B9;&#x5F0F;&#x8FD4;&#x56DE;&#x5230;&#x5BA2;&#x6237;&#x7AEF;&#x53BB;
+    # &#x81EA;&#x5B9A;&#x4E49;&#x8FD4;&#x56DE;&#x5B57;&#x6BB5;&#xFF0C;&#x751A;&#x81F3;&#x4E0D;&#x8FD4;&#x56DE;&#xFF0C;&#x53EA;&#x63D0;&#x4F9B;&#x9A8C;&#x8BC1;&#x529F;&#x80FD;
+    return jsonify(r)
+</code></pre><p><img src="https://upload-images.jianshu.io/upload_images/14597179-66943d92f81d0cdd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14597179-a5d2f999a87ddc3d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Flask构建可扩展的RESTful-API-7--权限控制.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 7. 权限控制">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"8. 补充完善","level":"1.9","depth":1,"previous":{"title":"7. 权限控制","level":"1.8","depth":1,"path":"Flask构建可扩展的RESTful-API-7--权限控制.md","ref":"Flask构建可扩展的RESTful-API-7--权限控制.md","articles":[]},"dir":"ltr"},"config":{"plugins":["donate","github-buttons@2.1.0","edit-link","livereload"],"root":".","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"donate":{"alipay":"https://upload-images.jianshu.io/upload_images/14597179-244cd80fc2dec0f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240","alipayText":"支付宝打赏","button":"打赏","title":"","wechat":"https://upload-images.jianshu.io/upload_images/14597179-5eaac14c06e7dc3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240","wechatText":"微信打赏"},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"github-buttons":{"repo":"itswl/flask_api","types":["star"],"size":"small"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"edit-link":{"label":"Edit This Page","base":"https://github.com/itswl/flask_api/edit/master"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"WeiLai","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"flask_api","language":"zh-hans","gitbook":"*","description":"flask_api"},"file":{"path":"Flask构建可扩展的RESTful-API-8--补充完善.md","mtime":"2018-12-18T09:24:11.208Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-12-18T09:31:48.987Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-donate/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-edit-link/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
