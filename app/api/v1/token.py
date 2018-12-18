@@ -4,8 +4,10 @@ from app.libs.redprint import Redprint
 from flask import current_app
 from app.libs.enums import ClientTypeEnum
 from app.models.user import User
-from app.validators.forms import ClientForm
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from app.validators.forms import ClientForm, TokenForm
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, SignatureExpired, \
+    BadSignature
+from app.libs.erro_code import AuthFailed
 
 from flask import jsonify
 
@@ -45,3 +47,24 @@ def generator_auth_token(uid, ac_type, scope=None,expiration=7200):
                     'type': ac_type.value,
                     'scope': scope
                 })  # 将想写入的信息以字典形式写入令牌
+
+@api.route('/secret', methods=['POST'])
+def get_token_info():
+    """获取令牌信息"""
+    form = TokenForm().validate_for_api()
+    s = Serializer(current_app.config['SECRET_KEY'])
+    try:
+        data = s.loads(form.token.data, return_header=True)  # 不报错就是合法的token
+    except SignatureExpired:
+        raise AuthFailed(msg='token is expired', erro_code=1003)
+    except BadSignature:
+        raise AuthFailed(msg='token is invalid', erro_code=1002)
+
+    r = {
+        'scope': data[0]['scope'],
+        'create_at': data[1]['iat'],  # 创建时间
+        'expire_in': data[1]['exp'],   # 过期时间
+        'uid': data[0]['uid']
+    } # 把令牌信息读取出来，以明文方式返回到客户端去
+    # 自定义返回字段，甚至不返回，只提供验证功能
+    return jsonify(r)

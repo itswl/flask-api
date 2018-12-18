@@ -37,3 +37,11 @@ class UserEmailForm(ClientForm):
     def validate_account(self, value):   # 验证账号是否已经注册
         if User.query.filter_by(email=value.data).first():  # 如果能查询到email
             raise ValidationError()   # 则抛出异常
+
+
+class BookSearchForm(Form):
+    q = StringField(validators=[DataRequired()])
+
+
+class TokenForm(Form):
+    token = StringField(validators=[DataRequired()])

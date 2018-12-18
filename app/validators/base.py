@@ -15,8 +15,10 @@ from flask import request,jsonify
 class BaseForm(Form):
     # def __init__(self, data):
     def __init__(self):
-        data = request.json
-        super(BaseForm, self).__init__(data=data)   # 调用父类构造函数
+        # data = request.json
+        data = request.get_json(silent = True)  #  出现错误，不报异常
+        args = request.args.to_dict()  # 完成查询参数的获取
+        super(BaseForm, self).__init__(data=data,**args)   # 调用父类构造函数
 
     def validate_for_api(self):
         valid = super(BaseForm, self).validate()  # 调用父类的构造方法 # 验证是否通过
