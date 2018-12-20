@@ -37,7 +37,7 @@ class DeleteSuccess(Success):
 
 class ServerError(APIException):
     code = 500
-    msg  = 'sorry,we made a mistaake'
+    msg  = 'sorry,we made a mistake'
     erro_code = 999
 
 class NotFound(APIException):

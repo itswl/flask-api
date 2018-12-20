@@ -85,7 +85,10 @@ def delete_user():
 # 离线脚本  fake.py
 @api.route('/<int:uid>', methods=['DELETE'])
 def super_delete_user(uid):
-    pass
+    with db.auto_commit():
+        user=User.query.filter_by(id=uid).first_or_404()
+        user.delete()
+        return DeleteSuccess()
 
 
 # @api.route('', methods = ['POST'])

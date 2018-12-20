@@ -10,12 +10,12 @@
 '''
 from wtforms import Form
 from app.libs.erro_code import ParameterException
-from flask import request,jsonify
+from flask import request
 
 class BaseForm(Form):
     # def __init__(self, data):
     def __init__(self):
-        # data = request.json
+        # data = request.json  # 获取json数据格式
         data = request.get_json(silent = True)  #  出现错误，不报异常
         args = request.args.to_dict()  # 完成查询参数的获取
         super(BaseForm, self).__init__(data=data,**args)   # 调用父类构造函数
