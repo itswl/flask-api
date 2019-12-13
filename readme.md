@@ -57,7 +57,7 @@
 
 # 安装
 
-1. 通过[Github](https://github.com/itswl/flask_api/tree_code),fork到自己的项目下
+1. 通过[Github](https://github.com/itswl/flask_api/tree/code),fork到自己的项目下
 ```
 git clone git@github.com:<你的用户名>/flask-api.git
 ```
